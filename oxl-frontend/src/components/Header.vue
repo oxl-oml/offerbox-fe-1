@@ -9,9 +9,9 @@
         </RouterLink>
 
         <div id="actions-bar">
-            <button class="btn btn-secondary text-white">
+            <RouterLink to="/products/new" class="btn btn-secondary text-white">
                 Dodaj ogłoszenie
-            </button>
+            </RouterLink>
         </div>
 
         <div id="notifications-bar">

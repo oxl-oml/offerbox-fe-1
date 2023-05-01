@@ -6,7 +6,7 @@
 
         <div class="row align-items-center justify-content-center">
             <div class="col-sm-12 col-md-6 col-lg-4  mt-4">
-                <LoginForm />
+                <RegistrationForm />
             </div>
         </div>
 
@@ -17,12 +17,12 @@
 
 import Header from '@/components/Header.vue';
 import { defineComponent, PropType } from 'vue';
-import LoginForm from '@/components/LoginForm.vue';
+import RegistrationForm from '@/components/RegistrationForm.vue';
 
 
 export default defineComponent({
-    name: "LoginPage",
-    components: { Header, LoginForm }
+    name: "RegistrationPage",
+    components: { Header, RegistrationForm }
 
 });
 
