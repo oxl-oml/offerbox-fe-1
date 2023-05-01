@@ -1,13 +1,13 @@
 export class Product {
     constructor(
-        name: string,
-        description: string,
-        categoryName: string,
-        price: number,
-        quantity: number,
-        dbaseId: number,
-        ownerId: number,
-        localId?: number
+        public name: string,
+        public description: string,
+        public categoryName: string,
+        public price: number,
+        public quantity: number,
+        public dbaseId: number,
+        public ownerId: number,
+        public localId?: number
 
     ){};
 }

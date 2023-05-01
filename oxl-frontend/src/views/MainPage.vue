@@ -11,8 +11,8 @@
                 Tutaj kategorie
             </div>
 
-            <div class="col-auto">
-                ff<br>ff
+            <div class="col-md-10">
+                <ProductList />
             </div>
 
         </div>
@@ -23,12 +23,13 @@
 
 <script lang="ts">
 import Header from '@/components/Header.vue';
-import Header from '@/components/Header.vue';
+import ProductList from '@/components/ProductList.vue';
 import { defineComponent, PropType } from 'vue';
 
 export default defineComponent({
     name: "MainPage",
-    components: { Header }
+    components: { Header, ProductList },
+    
 })
 
 </script>
