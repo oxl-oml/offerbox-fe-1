@@ -1,8 +1,8 @@
 <template>
-    <RouterLink :to="{ path: '/products/'+product?.dbaseId}" class="product-container p-0 m-4 w-25 shadow rounded">
-        <img src="../assets/samples/ferrari.jpg" class="img-fluid m-0 p-0" />
-        <div class="bottom-bar d-flex align-items-center justify-content-between p-1 bg-secondary">
-            <h4>{{ product?.name }}</h4>
+    <RouterLink :to="{ path: '/products/'+product?.dbaseId}" class="product-container p-0 m-4 shadow rounded">
+        <img src="../assets/samples/3.jpg" class="img-fluid m-0 p-0 rounded" />
+        <div class="bottom-bar d-flex align-items-start justify-content-between p-2 bg-secondary">
+            <h6>{{ product?.name }}</h6>
             <h6>{{ `${product?.price.toFixed(2)} zł` }}</h6>
         </div>
     </RouterLink>
@@ -17,7 +17,13 @@ export default defineComponent({
     name: "ProductItem",
     props: {
         product: {
-            type: Object as PropType<Product>
+            type: Object as PropType<Product>,
+            reqiured: true
+        }
+    },
+    methods: {
+        getImageUrl(): string {
+            return this.product?.imageURL ? this.product.imageURL : "none";
         }
     }
     
@@ -28,7 +34,28 @@ export default defineComponent({
 
 <style>
 .product-container{
-    max-width: 1000px;
+    width: 350px;
+    height: 300px;
+    color: white;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+
+.bottom-bar:hover{
+    margin-top: -50%;
+    transition: all 0.5s;
+    opacity: 0.9;
+    transition-timing-function: ease-in-out;
+    -webkit-transition-timing-function: ease-in-out;
+    
+}
+
+
+.bottom-bar{
+    position: relative;
+    height: inherit;
+    
 }
 
 </style>

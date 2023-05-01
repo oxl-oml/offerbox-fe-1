@@ -9,15 +9,28 @@
         </RouterLink>
 
         <div id="actions-bar">
-            Tutaj akcje tj. Dodaj produkt
+            <button class="btn btn-secondary text-white">
+                Dodaj ogłoszenie
+            </button>
         </div>
 
         <div id="notifications-bar">
-            Tutaj powiadomienia tj. obserwowane produkty
+            <RouterLink to="/">
+                <img src="../assets/icons/messages.svg" class="img-icons-white"/>
+            </RouterLink>
+            <RouterLink to="/">
+                <img src="../assets/icons/unfilled-star.svg" class="img-icons-white"/>
+            </RouterLink>
+            <RouterLink to="/">
+                <img src="../assets/icons/notifications.svg" class="img-icons-white"/>
+            </RouterLink>
         </div>
 
-        <div id="account-bar">
-            Tutaj akcje konta tj. wyświetl dane
+        <div id="account-bar" class="d-flex flex-row-reverse">
+            <RouterLink to="/">
+                <img src="../assets/icons/my-account.svg" class="img-icons-white"/>
+            </RouterLink>
+            
         </div>
 
     </div>
@@ -33,4 +46,15 @@ export default defineComponent({
 
 </script>
 
+
+<style>
+.img-icons-white{
+    width: 50px;
+    height: 50px;
+    fill: black;
+}
+
+
+
+</style>
 

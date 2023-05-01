@@ -1,8 +1,8 @@
 <!-- Strona główna -->
 
 <template>
-    <div class="container-fluid h-100 d-inline-block">
-        <div class="row bg-secondary sticky-top p-2">
+    <div id="main-element" class="container-fluid h-100 d-inline-block">
+        <div class="row bg-primary sticky-top p-2 text-light">
             <Header />
         </div>
 
@@ -33,3 +33,10 @@ export default defineComponent({
 })
 
 </script>
+
+
+<style>
+#main-element{
+    user-select: none;
+}
+</style>

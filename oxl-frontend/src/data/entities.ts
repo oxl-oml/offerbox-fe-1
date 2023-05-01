@@ -7,9 +7,12 @@ export class Product {
         public quantity: number,
         public dbaseId: number,
         public ownerId: number,
+        public imageURL: string,
         public localId?: number
 
     ){};
+
+    
 }
 
 export class Category {
