@@ -8,7 +8,7 @@
         </div>
         <div class="mb-3">
             <label for="inputPassword" class="form-label">Hasło</label>
-            <input type="password" class="form-control" id="inputPassword" placeholder="********" />
+            <input type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="form-control" id="inputPassword" placeholder="********" />
         </div>
         <div class="mb-3 d-flex">
             <input type="submit" value="Zaloguj się" class="btn btn-secondary text-white" />

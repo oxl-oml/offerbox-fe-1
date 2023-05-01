@@ -13,7 +13,7 @@
             </div>
             <div class="w-25 ms-2">
                 <label for="inputPrice" class="form-label">Cena</label>
-                <input type="number" class="form-control" id="inputPrice" placeholder="99.99" >
+                <input type="number" pattern = "[0-9]" class="form-control" id="inputPrice" placeholder="99.99" >
             </div>
         </div>
 
@@ -27,7 +27,7 @@
             <input type="file" accept="image/*" class="form-control" id="inputFile" multiple/>
         </div>
         <div class="mb-3 d-flex">
-            <input type="submit" accept="png,jpg,jpeg" value="Zaloguj się" class="btn btn-secondary text-white"  />
+            <input type="button" value="Dodaj ogłoszenie" class="btn btn-secondary text-white"  />
         </div>
     </form>
 
