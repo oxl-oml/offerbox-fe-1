@@ -11,31 +11,32 @@
         </div>
 
 
-        <div class="right-side-header d-flex flex-wrap">
-            <div id="actions-bar" class="mx-4">
+        <div class="right-side-header d-flex flex-wrap align-items-center">
+            <div id="actions-bar" class="mx-4" v-if="user">
             <RouterLink to="/products/new" class="btn btn-primary text-white">
                 Dodaj ogłoszenie
             </RouterLink>
             </div>
-            <div id="notifications-bar" class="mx-4">
+            <div id="notifications-bar" class="mx-4" v-if="user">
                 <RouterLink to="/">
                     <img src="../assets/icons/messages.svg" class="img-icons-white mx-2 c-tooltip" />
                 </RouterLink>
                 <RouterLink to="/">
-                    <img src="../assets/icons/unfilled-star.svg" class="img-icons-white mx-2"/>
+                    <img src="../assets/icons/unfilled-star.svg" class="img-icons-white mx-2 c-tooltip"/>
                 </RouterLink>
                 <RouterLink to="/">
-                    <img src="../assets/icons/notifications.svg" class="img-icons-white mx-2"/>
+                    <img src="../assets/icons/notifications.svg" class="img-icons-white mx-2 c-tooltip"/>
                 </RouterLink>
             </div>
-
+            <span class="mx-4" v-if="!user">
+                Zaloguj się, aby korzystać ze wszystkich funkcjonalności serwisu!
+            </span>
             <div id="account-bar" class="d-flex flex-row-reverse justify-content-between mx-4">
-                <RouterLink to="/" v-if="user" :title="{}">
-                    <img src="../assets/icons/my-account.svg" class="img-icons-white"/>
+                <RouterLink to="/" v-if="user" :title="''">
+                    <img src="../assets/icons/my-account.svg" class="img-icons-white c-tooltip"/>
                 </RouterLink>
                 <LoginRegister to="/" v-else="user" />
-                    
-                
+
             </div>
         </div>
         
@@ -53,10 +54,14 @@ import LoginRegister from './LoginRegister.vue';
 
 export default defineComponent({
     name: "Header",
-    // data(){
-    //     let u1 = new User(1, "Jan", "Kowalski", "L", "DD","43434343", "ddd", "user");
-    //     return {user: u1};
-    // },
+    data(){
+         let u1 = new User(1, "Jan", "Kowalski", "L", "DD","43434343", "ddd", "user");
+
+         return {
+            user: u1,
+            hover: false
+        };
+     },
     props: {
         user: {
             type: Object as PropType<User>
@@ -93,8 +98,11 @@ export default defineComponent({
     left: 5px;
     margin-top: 100%;
     background-color: black;
+}
 
-
+.c-tooltip:hover{
+    filter: invert(44%) sepia(87%) saturate(2151%) hue-rotate(163deg);
+    transition: all 0.2s ease;
 }
 
 
