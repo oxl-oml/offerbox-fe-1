@@ -1,5 +1,5 @@
 //import { Axios } from "axios";
-import { Product} from "./entities";
+import {Product} from "./entities";
 
 const protocol = "http";
 const hostname = "localhost";

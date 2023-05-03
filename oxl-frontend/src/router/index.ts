@@ -10,6 +10,7 @@ const routes: Array<RouteRecordRaw> = [
   { path: '/login', component: LoginPage},
   { path: '/register', component: RegistrationPage},
   { path: '/products/new', component: AddProduct},
+  { path: '/products:pathMatch(.*)*', redirect: "/" },
   
 ]
 

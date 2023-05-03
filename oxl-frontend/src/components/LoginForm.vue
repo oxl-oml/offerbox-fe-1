@@ -1,6 +1,7 @@
 <template>
 
-    <form class="border-form p-4 border-secondary">
+    <form class="border-form-1 p-4 border-secondary">
+        <h4>Podaj informacje o swoim koncie</h4>
         <div class="mb-3">
             <label for="inputEmail" class="form-label">Adres e-mail</label>
             <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="examlpe@domain.com" />
