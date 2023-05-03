@@ -12,6 +12,9 @@ export class Product {
 
     ){};
 
+    get fixedPrice(): string{
+        return this.price.toFixed(2) + ' zł';
+    }
     
 }
 
