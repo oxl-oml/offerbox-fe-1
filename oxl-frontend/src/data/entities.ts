@@ -7,7 +7,7 @@ export class Product {
         public quantity: number,
         public dbaseId: number,
         public ownerId: number,
-        public imageURL: string,
+        public imageURL: string[],
         public localId?: number
 
     ){};
@@ -20,9 +20,11 @@ export class Product {
 
 export class Category {
     constructor(
-        dbaseId: number,
-        name: string,
-        description: string
+        public dbaseId: number,
+        public parentId: number,
+        public name: string,
+        public description: string
+        
     ){};
 }
 
@@ -30,18 +32,24 @@ export class Category {
 export class User {
 
     constructor(
-        dbaseId: number,
-        username: string,
-        email: string,
-        firstName: string,
-        lastName: string,
-        phoneNumber: string,
-        profileImageUrl: string,
-        private role: string
+        public dbaseId: number,
+        public username: string,
+        public email: string,
+        public firstName: string,
+        public lastName: string,
+        public phoneNumber: string,
+        public profileImageUrl: string,
+        private role: string,
+        public accountStatus: string
     ){}
 
     public isAdmin(): boolean{
         return this.role=="admin"?true:false;
+    }
+
+    public isSuperAdmin():boolean{
+        return this.role=="todo"?true:false;
+        //TODO
     }
 }
 

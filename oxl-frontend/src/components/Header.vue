@@ -18,10 +18,10 @@
             </RouterLink>
             </div>
             <div id="notifications-bar" class="mx-4" v-if="user">
-                <RouterLink to="/">
+                <RouterLink to="/messages">
                     <img src="../assets/icons/messages.svg" class="img-icons-white mx-2 c-tooltip" />
                 </RouterLink>
-                <RouterLink to="/">
+                <RouterLink to="/favourites">
                     <img src="../assets/icons/unfilled-star.svg" class="img-icons-white mx-2 c-tooltip"/>
                 </RouterLink>
                 <RouterLink to="/">
@@ -55,7 +55,7 @@ import LoginRegister from './LoginRegister.vue';
 export default defineComponent({
     name: "Header",
     data(){
-         let u1 = new User(1, "Jan", "Kowalski", "L", "DD","43434343", "ddd", "user");
+         let u1 = new User(1, "Jan", "Kowalski", "L", "DD","43434343", "", "user", "enabled");
 
          return {
             user: u1,

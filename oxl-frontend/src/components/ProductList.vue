@@ -17,12 +17,11 @@ import { StoreState } from '@/store';
 export default defineComponent({
     name: "ProductList",
     components: {ProductItem},
-    computed: {
-        ...mapState<StoreState>({
-            products: (state: StoreState) => state.products
-        }),
-
-        ...mapGetters(["products"])
+    props:{
+        products: {
+            type: Object as PropType<Product[]>,
+            required: true
+        }
     }
 
 })

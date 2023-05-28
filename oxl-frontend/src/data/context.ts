@@ -9,7 +9,6 @@ export class Context {
         if(!Context.instance){
             Context.instance = new Context();
         }
-
         return Context.instance;
     }
 
@@ -23,6 +22,7 @@ export class Context {
     /* State variables */
     private currentUser?: User;
     private currentJWT?: string;
+    
 
 
 }

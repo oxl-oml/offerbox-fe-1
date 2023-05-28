@@ -25,23 +25,20 @@ export class HttpHandler{
 
     
 
-    //example
     loadProducts() : Promise<Product[]>{
-        return axios.get(urls.products).then((response: { data: Product[]; }) => response.data);
+        return axios.get(urls.products).then((response: { data: Product[]; }) => response.data).catch(() => console.log("HTTPS request error"));
     }
 
-    //code
-
     login(): Promise<User>{
-        return axios.get(urls.login).then((response: {data: User; }) => response.data);
+        return axios.get(urls.login).then((response: {data: User; }) => response.data).catch(() => console.log("HTTPS request error"));
     }
 
     loadCategories() : Promise<Category[]>{
-        return axios.get(urls.categories).then((response: {data: Category[]}) => response.data);
+        return axios.get(urls.categories).then((response: {data: Category[]}) => response.data).catch(() => console.log("HTTPS request error"));
     }
 
     loadUsers() : Promise<User[]>{
-        return axios.get(urls.users).then((response: {data: User[]}) => response.data);
+        return axios.get(urls.users).then((response: {data: User[]}) => response.data).catch(() => console.log("HTTPS request error"));
     }
 
 
