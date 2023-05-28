@@ -13,7 +13,7 @@ const urls = {
     products: urlBuilder("products"),
     orders: `${protocol}://${hostname}:${port}/orders`,
 
-    login: urlBuilder(""),
+    login: urlBuilder("/login"),
     categories: urlBuilder("categories"),
     users: urlBuilder("users")
 };
@@ -29,10 +29,6 @@ export class HttpHandler{
         return axios.get(urls.products).then((response: { data: Product[]; }) => response.data).catch(() => console.log("HTTPS request error"));
     }
 
-    login(): Promise<User>{
-        return axios.get(urls.login).then((response: {data: User; }) => response.data).catch(() => console.log("HTTPS request error"));
-    }
-
     loadCategories() : Promise<Category[]>{
         return axios.get(urls.categories).then((response: {data: Category[]}) => response.data).catch(() => console.log("HTTPS request error"));
     }
@@ -42,6 +38,10 @@ export class HttpHandler{
     }
 
 
+
+    login(loginData : any): Promise<User>{
+        return axios.post(urls.login, loginData).then((response: {data: User; }) => response.data).catch(() => console.log("HTTPS request error - login"));
+    }
 
 
 

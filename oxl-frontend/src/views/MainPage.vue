@@ -54,10 +54,11 @@ export default defineComponent({
         ...mapState<StoreState>({
             products: (state: StoreState) => state.products,
             categories: (state: StoreState) => state.categories,
-            selectedCategory: (state: StoreState) => state.selectedCategory
+            selectedCategory: (state: StoreState) => state.selectedCategory,
+            context: (state: StoreState) => state.context
         }),
 
-        ...mapGetters(["products", "categories", "selectedCategory"])
+        ...mapGetters(["products", "categories", "selectedCategory", "context"])
 
     },
     methods:{

@@ -22,6 +22,15 @@ export class Context {
     /* State variables */
     private currentUser?: User;
     private currentJWT?: string;
+
+
+    public isAdmin(): boolean{
+        return this.currentUser?.isAdmin() || false;
+    }
+
+    public isLogged(): boolean{
+        return this.currentUser?true:false;
+    }
     
 
 

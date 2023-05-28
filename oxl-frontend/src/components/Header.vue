@@ -54,14 +54,6 @@ import LoginRegister from './LoginRegister.vue';
 
 export default defineComponent({
     name: "Header",
-    data(){
-         let u1 = new User(1, "Jan", "Kowalski", "L", "DD","43434343", "", "user", "enabled");
-
-         return {
-            user: u1,
-            hover: false
-        };
-     },
     props: {
         user: {
             type: Object as PropType<User>

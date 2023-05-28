@@ -1,10 +1,12 @@
 import { createStore } from 'vuex'
 import {User, Product, Category} from '@/data/entities'
+import { Context } from '@/data/context';
 
 export interface StoreState {
   products: Product[],
   categories: Category[],
-  selectedCategory: string
+  selectedCategory: string,
+  context: Context | null
 
 }
 
@@ -12,18 +14,27 @@ export default createStore<StoreState>({
   state: {
     products: [new Product("Rower miejski składany", "Lorem ipsum", "Sport", 678, 1, 1, 1001, [])],
     categories: [],
-    selectedCategory: 'All'
+    selectedCategory: 'All',
+    context: null
 
   },
   getters: {
-    products(state){
+    products(state): Product[]{
       return state.products;
     },
-    categories(state){
+
+    productsByCategory(state){
+      return state.products.filter( p => state.selectedCategory === "All" || p.categoryName === state.selectedCategory)
+    },
+
+    categories(state): Category[]{
       return state.categories;
     },
-    selectedCategory(state){
+    selectedCategory(state): string{
       return state.selectedCategory;
+    },
+    context(state){
+      return state.context;
     }
 
   },
@@ -48,6 +59,11 @@ export default createStore<StoreState>({
     async loadCategories(context, task: () => Promise<Category[]>){
       let data = await task();
       context.commit("addCategories", data);
+    },
+
+    async login(context, task: () => Promise<Context>){
+      let data = await task();
+      context.commit("loginUser", data);
     }
     
   },
