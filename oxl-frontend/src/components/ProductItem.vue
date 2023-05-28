@@ -3,7 +3,7 @@
         <img src="../assets/samples/3.jpg" class="img-fluid m-0 p-0 rounded" />
         <div class="bottom-bar d-flex align-items-start justify-content-between p-2 bg-secondary">
             <h6>{{ product?.name }}</h6>
-            <h6>{{ `${product?.price.toFixed(2)} zł` }}</h6>
+            <h6>{{ product?.fixedPrice }}</h6>
         </div>
     </RouterLink>
 </template>
@@ -22,8 +22,8 @@ export default defineComponent({
         }
     },
     methods: {
-        getImageUrl(): string {
-            return this.product?.imageURL ? this.product.imageURL : "none";
+        getImageUrl(): string[] {
+            return this.product?.imageURL ? this.product.imageURL : [];
         }
     }
     
