@@ -22,6 +22,7 @@ export class Context {
 
     /* State variables */
     private currentUser?: User;
+    private currentJWT?: string;
 
 
 }

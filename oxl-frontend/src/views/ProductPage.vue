@@ -31,8 +31,11 @@
 <script lang="ts">
 import ProductItem from '@/components/ProductItem.vue';
 import { Product } from '@/data/entities';
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, onMounted, PropType } from 'vue';
 import Header from '@/components/Header.vue';
+import { HttpHandler } from '@/data/httpHandler';
+
+//import { Carousel, Slide } from 'vue-carousel';
 
 export default defineComponent({
     name: 'ProductPage',
@@ -44,12 +47,6 @@ export default defineComponent({
             required: true
         }
     },
-    data() {
-        let product = new Product("Rower miejski składany", "Lorem ipsum", "Sport", 678, 1, 1, 1001, "");
-        return {
-            product: product
-        }
-    }
 })
 
 </script>

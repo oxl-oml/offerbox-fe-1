@@ -8,7 +8,7 @@
 
         <div class="row flex-nowrap">
             <div class="col-auto col-md-2 bg-light d-flex flex-column align-items-center"> 
-                Tutaj kategorie
+                Tutaj kategorie 
             </div>
 
             <div class="col-md-10">
@@ -24,11 +24,27 @@
 <script lang="ts">
 import Header from '@/components/Header.vue';
 import ProductList from '@/components/ProductList.vue';
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, onMounted, PropType } from 'vue';
+import { HttpHandler } from '@/data/httpHandler';
+import { User } from '@/data/entities';
+import { useStore } from 'vuex';
+
 
 export default defineComponent({
     name: "MainPage",
+    setup(){
+        return {store: useStore()};
+    },
     components: { Header, ProductList },
+    data(){
+        const store = useStore();
+        const httpHandler = new HttpHandler();
+        onMounted(()=> store.dispatch("loadProducts", httpHandler.loadProducts))
+        
+    },
+    actions:{
+        
+    }
     
 })
 

@@ -45,4 +45,13 @@ export class User {
     }
 }
 
+export class Role{
+    constructor(
+        id_role: number,
+        name: string,
+        code: string,
+        description: string
+    ){}
+}
+
 
