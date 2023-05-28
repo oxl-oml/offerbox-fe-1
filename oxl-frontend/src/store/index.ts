@@ -44,6 +44,9 @@ export default createStore<StoreState>({
     },
     selectCategory(currentState: StoreState, selectedCategory: string){
       currentState.selectedCategory  = selectedCategory;
+    },
+    addCategories(currentState: StoreState, categories: Category[]){
+      currentState.categories = categories;
     }
 
   },

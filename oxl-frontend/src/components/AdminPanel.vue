@@ -1,4 +1,4 @@
-<template>
+<template v-if="">
     <div class="row p-2 mt-4">
                 <div class="col-md-3">
                     <h5>Zadania administracyjne</h5>
@@ -22,6 +22,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import AdminPanelUsers from '../components/AdminPanels/AdminPanelUsers.vue';
+import { Context } from '@/data/context';
+
+
 
 export default defineComponent({
     name: "AdminPanel",

@@ -8,7 +8,7 @@
 
         <div class="row flex-nowrap">
             <div class="col-auto col-md-2 bg-light d-flex flex-column align-items-center"> 
-                <CategoryList :categories=categories />
+                <CategoryList :categories=categories @selectCategory="handleSelectedCategory"/>
             </div>
 
             <div class="col-md-10">
@@ -43,7 +43,10 @@ export default defineComponent({
     data(){
         const store = useStore();
         const httpHandler = new HttpHandler();
-        onMounted(()=> store.dispatch("loadProducts", httpHandler.loadProducts))
+        onMounted(()=> {
+            store.dispatch("loadProducts", httpHandler.loadProducts)
+            store.dispatch("loadCategories", httpHandler.loadCategories)
+        })
         
         
     },

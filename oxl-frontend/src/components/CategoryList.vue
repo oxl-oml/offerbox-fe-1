@@ -1,7 +1,8 @@
 <template>
-    <div>
-        <ul>
-            <li v-for="cat in categories" v-bind:key="cat.dbaseId" v-on:click="selectCategory(cat.name)">{{ cat.name }}</li>
+    <div class="w-100">
+        <h5 class="pt-4" >Wybierz kategorię</h5>
+        <ul class="list-group h-100" >
+            <li class="list-group-item custom-list-item" v-for="cat in categories" v-bind:key="cat.dbaseId" v-on:click="selectCategory(cat.name)">{{ cat.name }}</li>
         </ul>
     </div>
 
@@ -32,3 +33,15 @@ export default defineComponent({
 })
 
 </script>
+
+<style>
+
+.custom-list-item{
+    cursor: pointer;
+}
+
+.custom-list-item:hover{
+    background-color: gold;
+}
+
+</style>
