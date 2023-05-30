@@ -17,11 +17,20 @@ import { StoreState } from '@/store';
 export default defineComponent({
     name: "ProductList",
     components: {ProductItem},
-    props:{
-        products: {
-            type: Object as PropType<Product[]>,
-            required: true
-        }
+    computed: {
+        ...mapState<StoreState>({
+            selectedCategory: (state: StoreState) => state.selectedCategory,
+            context: (state: StoreState) => state.context,
+            products: (state: StoreState) => state.products
+        }),
+
+        ...mapGetters(["products", "selectedCategory", "context"])
+
+    },
+    methods:{
+        ...mapMutations({
+            handleSelectedCategory: "selectCategory"
+        })
     }
 
 })

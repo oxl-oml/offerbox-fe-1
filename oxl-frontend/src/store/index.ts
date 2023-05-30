@@ -12,19 +12,27 @@ export interface StoreState {
 
 export default createStore<StoreState>({
   state: {
-    products: [new Product("Rower miejski składany", "Lorem ipsum", "Sport", 678, 1, 1, 1001, [])],
-    categories: [],
+    products: [new Product("Rower miejski składany", "Lorem ipsum", "Sport", 39.990000000000002, 1, 1, 1001, [])],
+    categories: [new Category(0,0,"All","")],
     selectedCategory: 'All',
     context: null
 
   },
   getters: {
-    products(state): Product[]{
+    products(state, category?): Product[]{
+      if(category){
+        console.log(state.selectedCategory);
+        return state.products.filter( p => state.selectedCategory === 'All' || p.categoryName === state.selectedCategory )
+      }
       return state.products;
     },
 
-    productsByCategory(state){
-      return state.products.filter( p => state.selectedCategory === "All" || p.categoryName === state.selectedCategory)
+    productsByCategory(state, x: string){
+     
+    },
+
+    productById(state, id: number){
+      return state.products.filter( p => p.dbaseId === id);
     },
 
     categories(state): Category[]{
@@ -44,9 +52,10 @@ export default createStore<StoreState>({
     },
     selectCategory(currentState: StoreState, selectedCategory: string){
       currentState.selectedCategory  = selectedCategory;
+     
     },
     addCategories(currentState: StoreState, categories: Category[]){
-      currentState.categories = categories;
+      currentState.categories.push(...categories);
     }
 
   },

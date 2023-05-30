@@ -28,7 +28,7 @@ export default defineComponent({
        selectCategory(cName: string){
             this.$emit("selectCategory", cName);
             console.log("Clicked:" + cName);
-       }
+       },
     }
 })
 

@@ -1,4 +1,8 @@
-export class Product {
+interface IGetters{
+    fixedPrice: string
+}
+
+export class Product implements IGetters {
     constructor(
         public name: string,
         public description: string,
@@ -12,8 +16,13 @@ export class Product {
 
     ){};
 
-    get fixedPrice(): string{
-        return this.price.toFixed(2) + ' zł';
+    public get fixedPrice(): string{
+        return "DD";
+        return (this.price.toFixed(2) + ' zł').toString();
+    }
+
+    public FixedPrice(): string{
+        return (this.price.toFixed(2) + ' zł').toString();
     }
     
 }
