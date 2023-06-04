@@ -31,7 +31,8 @@ export default defineComponent({
         ...mapMutations({
             handleSelectedCategory: "selectCategory"
         })
-    }
+    },
+    
 
 })
 

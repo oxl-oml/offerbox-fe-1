@@ -11,7 +11,7 @@
             <input v-model="loginForm.password" type="password" class="form-control" id="inputPassword" placeholder="********" />
         </div>
         <div class="mb-3 d-flex">
-            <input type="submit" value="Zaloguj się" class="btn btn-secondary text-white" v-on:submit="tryLogin()"/>
+            <input type="button" value="Zaloguj się" class="btn btn-secondary text-white" v-on:click="tryLogin()"/>
         </div>
     </form>
 
@@ -37,11 +37,13 @@ export default defineComponent({
     methods:{
 
         ...mapActions(["login"]),
+
+        submit(){
+            console.log(this.loginForm);
+            this.$emit('submitLogin', this.loginForm);
+        },
         
         tryLogin(){
-
-            
-
             this.login((data: LoginForm) => {
                 return new HttpHandler().login(this.loginForm).then(()=> console.log("login"))
             })

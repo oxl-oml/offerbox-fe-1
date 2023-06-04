@@ -2,6 +2,11 @@ interface IGetters{
     fixedPrice: string
 }
 
+export type LoginResponse = {
+    token: string,
+    exporation: string
+}
+
 export class Product implements IGetters {
     constructor(
         public name: string,
@@ -78,6 +83,8 @@ export class LoginForm{
         public password: string
     ){}
 }
+
+
 
 
 

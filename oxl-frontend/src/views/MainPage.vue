@@ -8,7 +8,7 @@
 
         <div class="row flex-nowrap">
             <div class="col-auto col-md-2 bg-light d-flex flex-column align-items-center"> 
-                <CategoryList v-bind:categories=categories  @selectCategory="(cName) => handleSelectedCategory(cName)"/>
+                <CategoryList v-bind:selectedCategory="selectedCategory" v-bind:categories=categories  @selectCategory="(cName) => handleSelectedCategory(cName)"/>
             </div>
 
             <div class="col-md-10">
@@ -19,7 +19,6 @@
 
     </div>
 
-    {{ console.log(categories) }}
 </template>
 
 

@@ -1,4 +1,4 @@
-<template v-if="">
+<template>
     <div class="row p-2 mt-4">
                 <div class="col-md-3">
                     <h5>Zadania administracyjne</h5>

@@ -16,6 +16,8 @@ const routes: Array<RouteRecordRaw> = [
   { path: '/login', component: LoginPage},
   { path: '/login-force', redirect: '/login'},
   { path: '/register', component: RegistrationPage},
+  { path: '/products/:id', component: ProductPage},
+  { path: '/products:pathMatch(.*)*', redirect: "/" },
   { 
     path: '/products/new', 
     component: AddProduct,
@@ -55,8 +57,6 @@ const routes: Array<RouteRecordRaw> = [
       next();
     }
 },
-  { path: '/products/:id', component: ProductPage},
-  { path: '/products:pathMatch(.*)*', redirect: "/" },
   
 ]
 

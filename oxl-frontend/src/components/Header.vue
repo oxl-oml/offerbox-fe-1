@@ -12,12 +12,12 @@
 
 
         <div class="right-side-header d-flex flex-wrap align-items-center">
-            <div id="actions-bar" class="mx-4" v-if="user">
+            <div id="actions-bar" class="mx-4" v-if="context.currentUser">
             <RouterLink to="/products/new" class="btn btn-primary text-white">
                 Dodaj ogłoszenie
             </RouterLink>
             </div>
-            <div id="notifications-bar" class="mx-4" v-if="user">
+            <div id="notifications-bar" class="mx-4" v-if="context.currentUser">
                 <RouterLink to="/messages">
                     <img src="../assets/icons/messages.svg" class="img-icons-white mx-2 c-tooltip" />
                 </RouterLink>
@@ -28,14 +28,14 @@
                     <img src="../assets/icons/notifications.svg" class="img-icons-white mx-2 c-tooltip"/>
                 </RouterLink>
             </div>
-            <span class="mx-4" v-if="!user">
+            <span class="mx-4" v-if="!context.currentUser">
                 Zaloguj się, aby korzystać ze wszystkich funkcjonalności serwisu!
             </span>
             <div id="account-bar" class="d-flex flex-row-reverse justify-content-between mx-4">
-                <RouterLink to="/" v-if="user" :title="''">
+                <RouterLink to="/" v-if="context.currentUser" :title="''">
                     <img src="../assets/icons/my-account.svg" class="img-icons-white c-tooltip"/>
                 </RouterLink>
-                <LoginRegister to="/" v-else="user" />
+                <LoginRegister to="/" v-else="context.currentUser" />
 
             </div>
         </div>
@@ -51,8 +51,13 @@ import { defineComponent, PropType } from 'vue';
 import {Context} from '../data/context'
 import { User } from '@/data/entities';
 import LoginRegister from './LoginRegister.vue';
+import { mapGetters } from 'vuex';
+import { useStore } from 'vuex';
 
 export default defineComponent({
+    setup(){
+        return {store : useStore()}
+    },
     name: "Header",
     props: {
         user: {
@@ -62,7 +67,12 @@ export default defineComponent({
     computed: {
         loggeduser(): User | null {
             return this.user ? this.user : null;
-        }
+        },
+        ...mapGetters(["context"])
+        
+    },
+    methods:{
+        
     },
     components: { LoginRegister }
 });
