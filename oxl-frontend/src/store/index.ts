@@ -11,7 +11,14 @@ export interface StoreState {
   selectedCategory: string,//store selected category
   context: Context,       //store user data like JWT
   storedProduct?: Product, //store product in /product/id page
-  actualProductId?: number //store id catched from url
+  actualProductId?: number,//store id catched from url
+  
+
+  //admin
+  users: User[],
+  selectedAdminOption: "",
+
+
 
 }
 
@@ -21,7 +28,9 @@ export default createStore<StoreState>({
     categories: [new Category(0,0,"All","")],
     selectedCategory: 'All',
     context: Context.getInstance(),
-    storedProduct: new Product("Rower miejski składany", "Lorem ipsum", "Sport", 39.990000000000002, 1, 1, 1001, [])
+    storedProduct: new Product("Rower miejski składany", "Lorem ipsum", "Sport", 39.990000000000002, 1, 1, 1001, []),
+    users: [],
+    selectedAdminOption: "",
 
   },
   getters: {
@@ -55,7 +64,13 @@ export default createStore<StoreState>({
     },
     actualProductId(state){
       return state.storedProduct;
+    },
+
+    users(state){
+      return state.users;
     }
+
+
 
   },
   mutations: {
@@ -84,6 +99,11 @@ export default createStore<StoreState>({
       console.log(data);
       currentState.context.currentJWT = data.token;
       console.log(Context.getInstance().currentJWT);
+    },
+
+    addUsers(currentState: StoreState, users: User[]){
+      console.log(users);
+      currentState.users = users;
     }
 
   },
