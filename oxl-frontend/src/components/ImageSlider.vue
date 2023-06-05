@@ -11,8 +11,9 @@
 <script lang="ts">
 
 import '@gaiaz/vue-image-slider/dist/image-slider.css'
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
   data () {
     return {
       slides: [

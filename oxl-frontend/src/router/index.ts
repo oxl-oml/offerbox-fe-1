@@ -7,18 +7,56 @@ import ProductPage from '../views/ProductPage.vue'
 import AdminPage from '../views/AdminPage.vue'
 import FavPage from '@/views/FavPage.vue'
 import MessPage from '@/views/MessPage.vue'
+import { Context } from '@/data/context'
+
 
 const routes: Array<RouteRecordRaw> = [
   { path: '/', component: MainPage},
   { path: '/products', redirect: "/"},
   { path: '/login', component: LoginPage},
+  { path: '/login-force', redirect: '/login'},
   { path: '/register', component: RegistrationPage},
-  { path: '/products/new', component: AddProduct},
-  { path: '/favourites', component: FavPage},
-  { path: '/messages', component: MessPage},
-  { path: '/admin', component: AdminPage},
   { path: '/products/:id', component: ProductPage},
   { path: '/products:pathMatch(.*)*', redirect: "/" },
+  { 
+    path: '/products/new', 
+    component: AddProduct,
+    beforeEnter(to, form, next){
+      if(!Context.getInstance().isLogged()){
+        next("/login-force");
+      }
+      next();
+    }
+  },
+  { 
+    path: '/favourites', 
+    component: FavPage,
+    beforeEnter(to, form, next){
+      if(!Context.getInstance().isLogged()){
+        next("/login-force");
+      }
+      next();
+    }
+  },
+  { 
+    path: '/messages', 
+    component: MessPage,
+    beforeEnter(to, form, next){
+      if(!Context.getInstance().isLogged()){
+        next("/login-force");
+      }
+      next();
+    }
+  },
+  { 
+    path: '/admin', component: AdminPage,
+    beforeEnter(to, form, next){
+      if(!Context.getInstance().isAdmin()){
+        next("/");
+      }
+      next();
+    }
+},
   
 ]
 

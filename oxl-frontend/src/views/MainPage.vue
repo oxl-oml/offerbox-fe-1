@@ -8,18 +8,17 @@
 
         <div class="row flex-nowrap">
             <div class="col-auto col-md-2 bg-light d-flex flex-column align-items-center"> 
-                <CategoryList :categories=categories />
+                <CategoryList v-bind:selectedCategory="selectedCategory" v-bind:categories=categories  @selectCategory="(cName) => handleSelectedCategory(cName)"/>
             </div>
 
             <div class="col-md-10">
-                <ProductList :products=products />
+                <ProductList/>
             </div>
 
         </div>
 
     </div>
 
-    {{ console.log(categories) }}
 </template>
 
 
@@ -29,7 +28,7 @@ import ProductList from '@/components/ProductList.vue';
 import { defineComponent, onMounted, PropType } from 'vue';
 import { HttpHandler } from '@/data/httpHandler';
 import { Category, User } from '@/data/entities';
-import { useStore } from 'vuex';
+import { mapMutations, useStore } from 'vuex';
 import { mapState, mapGetters } from 'vuex';
 import { StoreState } from '@/store';
 import CategoryList from '@/components/CategoryList.vue';
@@ -43,7 +42,10 @@ export default defineComponent({
     data(){
         const store = useStore();
         const httpHandler = new HttpHandler();
-        onMounted(()=> store.dispatch("loadProducts", httpHandler.loadProducts))
+        onMounted(()=> {
+            store.dispatch("loadProducts", httpHandler.loadProducts)
+            store.dispatch("loadCategories", httpHandler.loadCategories)
+        })
         
         
     },
@@ -52,18 +54,26 @@ export default defineComponent({
     },
     computed: {
         ...mapState<StoreState>({
-            products: (state: StoreState) => state.products,
             categories: (state: StoreState) => state.categories,
-            selectedCategory: (state: StoreState) => state.selectedCategory
+            selectedCategory: (state: StoreState) => state.selectedCategory,
+            context: (state: StoreState) => state.context,
+            products: (state: StoreState) => state.products
         }),
 
-        ...mapGetters(["products", "categories", "selectedCategory"])
+        ...mapGetters(["products", "categories", "selectedCategory", "context"])
 
     },
     methods:{
-        handleSelectedCategory(cName: string){
-            this.selectedCategory = cName;
-        }
+        // handleSelectedCategory(cName: string){
+        //     this.selectedCategory = cName;
+        //     console.log("Passed selected category" + cName);
+        // },
+
+        ...mapMutations({
+            handleSelectedCategory: "selectCategory"
+        })
+
+        
     }
     
 })

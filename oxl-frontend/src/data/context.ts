@@ -20,8 +20,16 @@ export class Context {
 
 
     /* State variables */
-    private currentUser?: User;
-    private currentJWT?: string;
+    public currentUser?: User = new User(0, "dd", "dd@dd.pl", "Adam", "Kowalski", "3142343", "dd", "dd", "dd");
+    public currentJWT?: string;
+
+    public isAdmin(): boolean{
+        return this.currentUser?.isAdmin() || false;
+    }
+
+    public isLogged(): boolean{
+        return this.currentUser?true:false;
+    }
     
 
 

@@ -22,6 +22,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import AdminPanelUsers from '../components/AdminPanels/AdminPanelUsers.vue';
+import { Context } from '@/data/context';
+
+
 
 export default defineComponent({
     name: "AdminPanel",

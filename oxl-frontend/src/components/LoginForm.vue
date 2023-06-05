@@ -4,26 +4,53 @@
         <h4>Podaj informacje o swoim koncie</h4>
         <div class="mb-3">
             <label for="inputEmail" class="form-label">Adres e-mail</label>
-            <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="examlpe@domain.com" />
-            <div id="emailHelp" class="form-text">Twój adres e-mail zostanie sprzedany za grosze ruskim hakerom.</div>
+            <input v-model="loginForm.email" type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="examlpe@domain.com" />
         </div>
         <div class="mb-3">
             <label for="inputPassword" class="form-label">Hasło</label>
-            <input type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="form-control" id="inputPassword" placeholder="********" />
+            <input v-model="loginForm.password" type="password" class="form-control" id="inputPassword" placeholder="********" />
         </div>
         <div class="mb-3 d-flex">
-            <input type="submit" value="Zaloguj się" class="btn btn-secondary text-white" />
+            <input type="button" value="Zaloguj się" class="btn btn-secondary text-white" v-on:click="tryLogin()"/>
         </div>
     </form>
 
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { HttpHandler } from '@/data/httpHandler';
+import { defineComponent, PropType, VueElement } from 'vue';
+import {LoginForm} from '@/data/entities'
+import { mapState, mapActions } from 'vuex';
 
 export default defineComponent({
     name: "LoginForm",
+    data(){
+
+        return {
+            loginForm:{
+                email: null,
+                password: null
+            }
+        }
+    },
+    methods:{
+
+        ...mapActions(["login"]),
+
+        submit(){
+            console.log(this.loginForm);
+            this.$emit('submitLogin', this.loginForm);
+        },
+        
+        tryLogin(){
+            this.login((data: LoginForm) => {
+                return new HttpHandler().login(this.loginForm).then(()=> console.log("login"))
+            })
+        }
+    }
 })
+
 
 
 </script>
