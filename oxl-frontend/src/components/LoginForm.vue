@@ -21,7 +21,7 @@
 import { HttpHandler } from '@/data/httpHandler';
 import { defineComponent, PropType, VueElement } from 'vue';
 import {LoginForm} from '@/data/entities'
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 
 export default defineComponent({
     name: "LoginForm",
@@ -37,15 +37,13 @@ export default defineComponent({
     methods:{
 
         ...mapActions(["login"]),
-
-        submit(){
-            console.log(this.loginForm);
-            this.$emit('submitLogin', this.loginForm);
-        },
+        ...mapMutations({
+            loginMutation: "loginUser"
+        }),
         
         tryLogin(){
             this.login((data: LoginForm) => {
-                return new HttpHandler().login(this.loginForm).then(()=> console.log("login"))
+                return new HttpHandler().login(this.loginForm).then((data)=> {console.log(data); this.loginMutation(data)})
             })
         }
     }

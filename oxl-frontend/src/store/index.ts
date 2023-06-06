@@ -95,10 +95,15 @@ export default createStore<StoreState>({
       currentState.actualProductId = id;
     },
 
-    loginUser(currentState: StoreState, data: LoginResponse){
+    loginUser(currentState: StoreState, data: LoginResponse | any){
       console.log(data);
-      currentState.context.currentJWT = data.token;
-      console.log(Context.getInstance().currentJWT);
+      if(data?.token === null){
+        console.log("I have NO token for you... looser!");
+      }
+      else{   
+        currentState.context.currentJWT = data?.token;
+        console.log(Context.getInstance().currentJWT);
+      }
     },
 
     addUsers(currentState: StoreState, users: User[]){

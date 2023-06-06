@@ -1,6 +1,6 @@
 <template>
    <h5>Zarządzanie użytkownikami</h5>
-    <table class="interactive-table col-xl-8">
+    <table class="interactive-table">
 
         <tr>
             <th v-for="key in Object.keys((users[0]))">

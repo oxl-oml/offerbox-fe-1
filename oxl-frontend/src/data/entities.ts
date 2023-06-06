@@ -4,7 +4,7 @@ interface IGetters{
 
 export type LoginResponse = {
     token: string,
-    exporation: string
+    expires: string
 }
 
 export class Product implements IGetters {
