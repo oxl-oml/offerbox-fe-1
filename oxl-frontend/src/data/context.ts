@@ -30,7 +30,8 @@ export class Context {
     }
 
     public isLogged(): boolean{
-        return this.currentUser?true:false;
+       // return this.currentUser?true:false;
+       return true;
     }
     
 

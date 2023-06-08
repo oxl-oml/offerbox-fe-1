@@ -5,7 +5,7 @@
         </div>
     </div> 
 
-    <div class="container-lg ">
+    <div class="container-fluid ">
         <AdminPanel />
     </div>
 

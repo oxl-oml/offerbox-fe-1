@@ -40,9 +40,10 @@
 </template>
 
 <script lang="ts">
-import { RegistrationForm } from '@/data/entities';
+import { Alert, AlertTypes, RegisterErrorResponse, RegisterResponse, RegistrationForm } from '@/data/entities';
 import { defineComponent, PropType } from 'vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
+import { HttpHandler } from '@/data/httpHandler';
 
 export default defineComponent({
     name: "RegistrationForm",
@@ -63,10 +64,33 @@ export default defineComponent({
     },
     methods:{
         ...mapActions(["register"]),
+        ...mapMutations({
+            setActualAlert: "setActualAlert",
+        }),
 
         tryRegister(){
-            console.log("Clicked");
-           
+            console.log("Register button clicked");
+            //this.$emit("TryRegister");
+            this.register(() => {
+                return new HttpHandler().register(this.registerData)
+                .then((data: RegisterResponse | RegisterErrorResponse)=> {
+                    var alert: Alert = ((data as RegisterResponse).id)?(new Alert(AlertTypes.INFORMATION, "Konto zostało utworzone.")):(new Alert(AlertTypes.ERROR, (data as RegisterErrorResponse).details as string | "Nieznany błąd"))
+                    this.setActualAlert(alert);
+                    
+                    if((data as RegisterResponse).id){
+                        console.log("Data as register response");
+                        this.$router.push({path:"/login"}); 
+                    }
+                    if((data as RegisterErrorResponse).details){
+                        console.log("Data as register error response");
+                        //this.$emit("TryRegister");
+                    }
+                    
+                    console.log(data); 
+                    
+                })
+                .catch((error: any) => {this.setActualAlert(new Alert(AlertTypes.ERROR, error as string | "Nieznany błąd" ))})
+            });
         }
     },
 })

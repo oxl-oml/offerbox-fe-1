@@ -1,16 +1,23 @@
 <template>
    <h5>Zarządzanie użytkownikami</h5>
-    <table class="interactive-table" v-if="users">
+    <table class="interactive-table" v-if="users[0]">
 
         <tr>
-            <th v-for="key in Object.keys((users[0]) as User)" :key="key">
+            <th>
+                Manage
+            </th>
+            <th v-for="key in Object.keys((users[0]) as User)">
                 {{ key }}
             </th>
         </tr>
 
-        <tr v-for="user in users" :key="user?.dbaseId">
-            <td v-for="val in Object.values((user as User))">
-                {{ val }}
+        <tr v-for="user in users" :key="user?.dbaseId" >
+            <td>
+                <RouterLink :to="{path: 'admin/users/edit/'+user?.dbaseId}">Edit</RouterLink>
+                <RouterLink :to="{path: 'admin/users/delete/'+user?.dbaseId}">Delete</RouterLink>
+            </td>
+            <td v-for="val in Object.values((user as User))" :title="val" :contenteditable="val.key != 'ddBaseId'">
+                {{ formatValue(val) }}
             </td>
         </tr>
 
@@ -47,6 +54,14 @@ export default defineComponent({
             
         }),
         ...mapGetters(["users"])
+    },
+    methods:{
+        formatValue(val: string): string{
+            if(val.length > 20){
+                return `${val.substring(0,19)}...`
+            }
+            return val;
+        }
     }
 });
 
@@ -55,7 +70,11 @@ export default defineComponent({
 
 <style>
 .interactive-table{
-    border-radius: 50%;
+    overflow: scroll;
+    position: relative;
+    left: 0;
+    right: 0;
+    font-size: small;
 }
 
 .interactive-table th, td{
@@ -63,6 +82,14 @@ export default defineComponent({
     border: 2px solid grey;
     padding: 4px;
     
+}
+
+.interactive-table td{
+    max-width: 600px
+}
+
+.interactive-table tr:nth-child(2n){
+    background-color:gainsboro;
 }
 
 </style>

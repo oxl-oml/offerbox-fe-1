@@ -4,8 +4,8 @@
             <Header />
         </div>
 
-        <div v-if="alert" class="row align-items-center justify-content-center">
-            {{ alert?.message }}
+        <div v-if="actualAlert" class="row align-items-center justify-content-center">
+            <AlertComponent :alert="actualAlert" />
         </div>
 
         <div class="row align-items-center justify-content-center">
@@ -13,7 +13,7 @@
                 <LoginForm v-if="!isShowingProgress" @submitLogin="(form) => handleLoginData(form)"  @TryLogin="isShowingProgress = !isShowingProgress" />
                 <LoginInProgress v-if="isShowingProgress" />
             </div>
-        </div>
+        </div>        
 
 
     </div>
@@ -26,7 +26,9 @@ import { defineComponent, PropType } from 'vue';
 import LoginForm from '@/components/LoginForm.vue';
 import {Alert} from '@/data/entities'
 import LoginInProgress from '@/components/LoginInProgress.vue';
-
+import router from '@/router';
+import { mapGetters } from 'vuex';
+import AlertComponent from '@/components/AlertComponent.vue';
 
 export default defineComponent({
     name: "LoginPage",
@@ -35,17 +37,15 @@ export default defineComponent({
             isShowingProgress: false
         }
     },
-    components: { Header, LoginForm, LoginInProgress },
-    props:{
-        alert:{
-            type: Object as PropType<Alert>,
-            required: false
-        }
-    },
+    components: { Header, LoginForm, LoginInProgress, AlertComponent },
     methods:{
         handleLoginData(form: typeof LoginForm){
             console.log("here" + form.email)
+            
         }
+    },
+    computed:{
+        ...mapGetters(["actualAlert"])
     }
 
 });

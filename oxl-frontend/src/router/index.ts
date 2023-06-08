@@ -8,8 +8,9 @@ import AdminPage from '../views/AdminPage.vue'
 import FavPage from '@/views/FavPage.vue'
 import MessPage from '@/views/MessPage.vue'
 import { Context } from '@/data/context'
+import ProfilePage from '@/views/ProfilePage.vue'
 
-
+//props: (route) => ({alert: {}, ...route.params}
 const routes: Array<RouteRecordRaw> = [
   { path: '/', component: MainPage},
   { path: '/products', redirect: "/"},
@@ -50,15 +51,26 @@ const routes: Array<RouteRecordRaw> = [
   },
   { 
     path: '/admin', component: AdminPage,
-    beforeEnter(to:any, form:any, next:any){
+    beforeEnter(to, form, next){
       if(!Context.getInstance().isAdmin()){
         next("/");
       }
       next();
     }
-},
-  
+  },
+  { 
+    path: '/myprofile', component: ProfilePage,
+    beforeEnter(to, form, next){
+      if(!Context.getInstance().isLogged()){
+        next("/");
+      }
+      next();
+    }
+  },
+
 ]
+  
+
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

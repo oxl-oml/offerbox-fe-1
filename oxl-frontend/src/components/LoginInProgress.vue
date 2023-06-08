@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        Trwa logowanie do serwisu.
+        <h5>Trwa sprawdzanie poprawności danych</h5>
     </div>
 
 </template>

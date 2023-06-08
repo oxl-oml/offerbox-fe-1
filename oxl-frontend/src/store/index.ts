@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import {User, Product, Category, LoginResponse} from '@/data/entities'
+import {User, Product, Category, LoginResponse, Alert} from '@/data/entities'
 import { Context } from '@/data/context';
 
 
@@ -12,12 +12,12 @@ export interface StoreState {
   context: Context,       //store user data like JWT
   storedProduct?: Product, //store product in /product/id page
   actualProductId?: number,//store id catched from url
+  actualAlert?: Alert
   
 
   //admin
   users: User[],
   selectedAdminOption: "",
-
 
 
 }
@@ -65,7 +65,9 @@ export default createStore<StoreState>({
     actualProductId(state){
       return state.storedProduct;
     },
-
+    actualAlert(state){
+      return state.actualAlert;
+    },
 
     //for admin
     users(state){
@@ -97,14 +99,18 @@ export default createStore<StoreState>({
       currentState.actualProductId = id;
     },
 
-    loginUser(currentState: StoreState, data: LoginResponse | any){
+    loginUser(currentState: StoreState, data: LoginResponse){
       //console.log(data);
       if(data?.token === null){
         console.log("I have NO token for you... looser!");
       }
       else{   
-        currentState.context.currentJWT = data?.token;
+        currentState.context.currentJWT = data?.token; //save JWT to store
+        currentState.context.currentUser = data?.user //save user to store
         console.log(Context.getInstance().currentJWT);
+        localStorage.setItem("User", JSON.stringify(data.user));
+        localStorage.setItem("JWT", data.token);
+        
       }
     },
 
@@ -115,6 +121,9 @@ export default createStore<StoreState>({
     addUsers(currentState: StoreState, users: User[]){
       console.log(users);
       currentState.users = users;
+    },
+    setActualAlert(currentState: StoreState, alert: Alert){
+      currentState.actualAlert = alert;
     }
 
   },
@@ -145,8 +154,12 @@ export default createStore<StoreState>({
 
     async loadUserByEmail(context, task: () => Promise<User>){
 
+    },
+
+    async register(context, task: () => Promise<Object>){
+      let data = await task();
+      // register nie odwoluje sie do mutacji, poniewaz efekt wywołania nie jest przechowywany
     }
-    
   },
   modules: {
   }

@@ -1,10 +1,11 @@
 //import { Axios } from "axios";
-import {Product, User, Category, LoginResponse, RegistrationForm, RegisterResponse, RegisterErrorResponse} from "./entities";
+import {Product, User, Category, LoginResponse, RegistrationForm, RegisterResponse, RegisterErrorResponse, Alert, AlertTypes} from "./entities";
 import  StoreState  from "@/store/index"; //TODO: Sprawnic, czy to nie jest zdrutowane
 import { useStore } from 'vuex';
 import { Context } from "./context";
 import secureLogin from "@/data/scripts/secureLogin"
 import router from "@/router";
+import LoginPage from "@/views/LoginPage.vue"
 
 //connection
 const protocol = "https";
@@ -77,7 +78,6 @@ export class HttpHandler{
     }
 
     register(registerData: RegistrationForm): Promise<any>{
-        console.log(registerData);
         var tmp = JSON.stringify({
             "name": registerData.firstName,
             "surname": registerData.lastName,
@@ -88,7 +88,12 @@ export class HttpHandler{
             "password": secureLogin(registerData.password1)
         })
         console.log(tmp);
-        return axios.post(urls.login, tmp, {'Content-Type': 'application/json'}).then((response: {data: RegisterResponse}) => { console.log(response.data); router.push("/login"); return response.data}).catch((error: RegisterErrorResponse) => console.log(error));
+        return axios.post(urls.register, tmp, {'Content-Type': 'application/json'})
+        .then((response: {data: RegisterResponse | RegisterErrorResponse}) => { 
+            return response.data;
+        }).catch((error: any) => {
+            console.log(error);
+        });
     }
 
 
