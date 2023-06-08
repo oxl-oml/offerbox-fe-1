@@ -101,15 +101,15 @@ export default createStore<StoreState>({
 
     loginUser(currentState: StoreState, data: LoginResponse){
       //console.log(data);
-      if(data?.token === null){
+      if(data?.tokenData.token === null){
         console.log("I have NO token for you... looser!");
       }
       else{   
-        currentState.context.currentJWT = data?.token; //save JWT to store
+        currentState.context.currentJWT = data?.tokenData.token; //save JWT to store
         currentState.context.currentUser = data?.user //save user to store
         console.log(Context.getInstance().currentJWT);
         localStorage.setItem("User", JSON.stringify(data.user));
-        localStorage.setItem("JWT", data.token);
+        localStorage.setItem("JWT", data.tokenData.token);
         
       }
     },

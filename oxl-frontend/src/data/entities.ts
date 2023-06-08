@@ -13,8 +13,10 @@ export type RegistrationForm = {
 }
 
 export type LoginResponse = {
-    token: string,
-    expires: string,
+    tokenData: {
+        token: string,
+        expires: string,
+    },
     user: User
 }
 
