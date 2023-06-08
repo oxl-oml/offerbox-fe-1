@@ -2,10 +2,35 @@ interface IGetters{
     fixedPrice: string
 }
 
+export type RegistrationForm = {
+    firstName: string,
+    lastName: string,
+    email: string,
+    phone: string,
+    password1: string,
+    password2: string
+    
+}
+
 export type LoginResponse = {
     token: string,
-    expires: string
+    expires: string,
+    user: User
 }
+
+export type RegisterResponse = {
+    id: number,
+    role: string
+}
+
+export type RegisterErrorResponse = {
+    status: string,
+    statusCode: number,
+    timestamp: number,
+    message: string,
+    details: string
+}
+
 
 export class Product implements IGetters {
     constructor(
@@ -84,6 +109,19 @@ export class LoginForm{
     ){}
 }
 
+
+export enum AlertTypes {
+    ERROR,
+    WARNING,
+    INFORMATION
+}
+export class Alert{
+
+    constructor(
+        public alertType: AlertTypes,
+        public message: string
+    ){}
+}
 
 
 

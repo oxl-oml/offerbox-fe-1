@@ -1,15 +1,15 @@
 <template>
    <h5>Zarządzanie użytkownikami</h5>
-    <table class="interactive-table">
+    <table class="interactive-table" v-if="users">
 
         <tr>
-            <th v-for="key in Object.keys((users[0]))">
+            <th v-for="key in Object.keys((users[0]) as User)" :key="key">
                 {{ key }}
             </th>
         </tr>
 
-        <tr v-for="user in users" v-bind:key="user.dbaseId">
-            <td v-for="val in Object.values((user))">
+        <tr v-for="user in users" :key="user?.dbaseId">
+            <td v-for="val in Object.values((user as User))">
                 {{ val }}
             </td>
         </tr>
@@ -23,9 +23,10 @@
 <script lang="ts">
 import { HttpHandler } from '@/data/httpHandler';
 import store from '@/store';
-import { defineComponent } from 'vue';
-import { mapGetters, useStore } from 'vuex';
+import { defineComponent, onMounted } from 'vue';
+import { mapGetters, useStore, mapState } from 'vuex';
 import { User } from '@/data/entities';
+import { StoreState } from '@/store';
 
 export default defineComponent({
     setup(){
@@ -36,14 +37,19 @@ export default defineComponent({
 
         const httpHandler = new HttpHandler();
 
-        store.dispatch("loadUsers", httpHandler.loadUsers);
+        onMounted(()=> {
+            store.dispatch("loadUsers", httpHandler.loadUsers);
+        })
     },
     computed:{
+        ...mapState<StoreState>({
+            users: (state: StoreState) => state.users
+            
+        }),
         ...mapGetters(["users"])
     }
-
-
 });
+
 
 </script>
 

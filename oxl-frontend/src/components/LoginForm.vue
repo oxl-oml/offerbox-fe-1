@@ -26,7 +26,6 @@ import { mapState, mapActions, mapMutations } from 'vuex';
 export default defineComponent({
     name: "LoginForm",
     data(){
-
         return {
             loginForm:{
                 email: null,
@@ -38,12 +37,16 @@ export default defineComponent({
 
         ...mapActions(["login"]),
         ...mapMutations({
-            loginMutation: "loginUser"
+            loginMutation: "loginUser",
+            addTemporaryEmailToUser: "addTemporaryEmailToUser"
         }),
         
+        //data: LoginForm
         tryLogin(){
-            this.login((data: LoginForm) => {
-                return new HttpHandler().login(this.loginForm).then((data)=> {console.log(data); this.loginMutation(data)})
+            this.login(() => {
+                this.$emit("TryLogin");
+                this.addTemporaryEmailToUser(this.loginForm.email);
+                return new HttpHandler().login(this.loginForm).then((data)=> {console.log("Ostatnie?"); console.log(data); this.loginMutation(data)})
             })
         }
     }

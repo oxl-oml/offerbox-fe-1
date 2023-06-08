@@ -24,11 +24,11 @@ export interface StoreState {
 
 export default createStore<StoreState>({
   state: {
-    products: [new Product("Rower miejski składany", "Lorem ipsum", "Sport", 39.990000000000002, 1, 1, 1001, [])],
-    categories: [new Category(0,0,"All","")],
+    products: [],
+    categories: [],
     selectedCategory: 'All',
     context: Context.getInstance(),
-    storedProduct: new Product("Rower miejski składany", "Lorem ipsum", "Sport", 39.990000000000002, 1, 1, 1001, []),
+    storedProduct: new Product("", "", "", 0, 0, 0, 0, []),
     users: [],
     selectedAdminOption: "",
 
@@ -66,6 +66,8 @@ export default createStore<StoreState>({
       return state.storedProduct;
     },
 
+
+    //for admin
     users(state){
       return state.users;
     }
@@ -96,7 +98,7 @@ export default createStore<StoreState>({
     },
 
     loginUser(currentState: StoreState, data: LoginResponse | any){
-      console.log(data);
+      //console.log(data);
       if(data?.token === null){
         console.log("I have NO token for you... looser!");
       }
@@ -104,6 +106,10 @@ export default createStore<StoreState>({
         currentState.context.currentJWT = data?.token;
         console.log(Context.getInstance().currentJWT);
       }
+    },
+
+    addTemporaryEmailToUser(currentState: StoreState, email: string){
+      currentState.context.currentUser = new User(0, "", email, "", "", "", "", "", "");
     },
 
     addUsers(currentState: StoreState, users: User[]){
@@ -135,6 +141,10 @@ export default createStore<StoreState>({
     async login(context, task: () => Promise<Context>){
       let data = await task();
       context.commit("loginUser", data);
+    },
+
+    async loadUserByEmail(context, task: () => Promise<User>){
+
     }
     
   },

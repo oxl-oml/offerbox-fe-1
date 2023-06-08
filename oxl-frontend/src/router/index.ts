@@ -50,7 +50,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   { 
     path: '/admin', component: AdminPage,
-    beforeEnter(to, form, next){
+    beforeEnter(to:any, form:any, next:any){
       if(!Context.getInstance().isAdmin()){
         next("/");
       }
