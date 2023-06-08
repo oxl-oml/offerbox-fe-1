@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import {User, Product, Category, LoginResponse, Alert} from '@/data/entities'
+import {User, Product, Category, LoginResponse, Alert, RegisterErrorResponse} from '@/data/entities'
 import { Context } from '@/data/context';
 
 
@@ -74,8 +74,6 @@ export default createStore<StoreState>({
       return state.users;
     }
 
-
-
   },
   mutations: {
     addProducts(currentState: StoreState, products: Product[]){
@@ -99,18 +97,19 @@ export default createStore<StoreState>({
       currentState.actualProductId = id;
     },
 
-    loginUser(currentState: StoreState, data: LoginResponse){
-      //console.log(data);
-      if(data?.tokenData.token === null){
-        console.log("I have NO token for you... looser!");
-      }
-      else{   
-        currentState.context.currentJWT = data?.tokenData.token; //save JWT to store
-        currentState.context.currentUser = data?.user //save user to store
-        console.log(Context.getInstance().currentJWT);
+    loginUser(currentState: StoreState, data: LoginResponse | RegisterErrorResponse){
+      console.log("Tutaj");
+      console.log(data);
+      if((data as LoginResponse)?.tokenData){
+        data = data as LoginResponse;
+        currentState.context.currentJWT = data.tokenData.token; //save JWT to store
+        currentState.context.currentUser = data.user //save user to store
         localStorage.setItem("User", JSON.stringify(data.user));
         localStorage.setItem("JWT", data.tokenData.token);
-        
+        console.log(Context.getInstance());
+      }
+      else{   
+        console.log("I have NO token for you... looser!");
       }
     },
 

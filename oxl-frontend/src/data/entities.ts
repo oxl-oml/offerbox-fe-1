@@ -15,7 +15,7 @@ export type RegistrationForm = {
 export type LoginResponse = {
     tokenData: {
         token: string,
-        expires: string,
+        expires: string
     },
     user: User
 }

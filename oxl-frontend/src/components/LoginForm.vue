@@ -22,6 +22,7 @@ import { HttpHandler } from '@/data/httpHandler';
 import { defineComponent, PropType, VueElement } from 'vue';
 import {LoginForm} from '@/data/entities'
 import { mapState, mapActions, mapMutations } from 'vuex';
+import router from '@/router';
 
 export default defineComponent({
     name: "LoginForm",
@@ -41,12 +42,18 @@ export default defineComponent({
             addTemporaryEmailToUser: "addTemporaryEmailToUser"
         }),
         
-        //data: LoginForm
+        
         tryLogin(){
             this.login(() => {
                 this.$emit("TryLogin");
                 this.addTemporaryEmailToUser(this.loginForm.email);
-                return new HttpHandler().login(this.loginForm).then((data)=> {console.log("Ostatnie?"); console.log(data); this.loginMutation(data)})
+                return new HttpHandler().login(this.loginForm)
+                .then((data)=> {
+                console.log("Ostatnie?"); 
+                console.log(data); 
+                this.loginMutation(data)
+                router.push({path:"/myprofile"})
+            })
             })
         }
     }

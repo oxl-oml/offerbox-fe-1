@@ -65,19 +65,19 @@ export class HttpHandler{
     }
 
     
-    login(loginData : any): Promise<User>{
+    login(loginData : any): Promise<LoginResponse>{
         console.log(loginData.email);
         var tmp = JSON.stringify({
             "email": loginData.email,
             "password": secureLogin(loginData.password)
-            //"email": "jktest@test.com",
-            //"password": "123456"
         });
         console.log(tmp);
-        return axios.post(urls.login, tmp, {'Content-Type': 'application/json'}).then((response: {data: LoginResponse | any; }) => { console.log(response.data); return response.data}).catch((error: any) => console.log(error.response));
+        return axios.post(urls.login, tmp, {'Content-Type': 'application/json'})
+        .then((response: {data: LoginResponse | any; }) => { console.log(response.data); return response.data})
+        .catch((error: any) => console.log(error.response));
     }
 
-    register(registerData: RegistrationForm): Promise<any>{
+    register(registerData: RegistrationForm): Promise<RegisterResponse | RegisterErrorResponse>{
         var tmp = JSON.stringify({
             "name": registerData.firstName,
             "surname": registerData.lastName,

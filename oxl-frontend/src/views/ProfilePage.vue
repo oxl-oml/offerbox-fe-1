@@ -51,7 +51,7 @@ export default defineComponent({
     },
     computed:{
       userData(): User{
-        localStorage.setItem("User", JSON.stringify(new User(0,"JanJan", "Kowalski@wp.pl", "Jan", "Kowalski", "31343253", "none","USR","A")))
+        //localStorage.setItem("User", JSON.stringify(new User(0,"JanJan", "Kowalski@wp.pl", "Jan", "Kowalski", "31343253", "none","USR","A")))
         var loggedUser: User = JSON.parse(localStorage.getItem("User") as string);
         return loggedUser;
       }
