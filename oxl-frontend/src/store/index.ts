@@ -35,7 +35,7 @@ export default createStore<StoreState>({
   getters: {
     products(state, category?): Product[]{
       if(category){
-        console.log(state.selectedCategory);
+        //console.log(state.selectedCategory);
         return state.products.filter( p => state.selectedCategory === 'All' || p.categoryName === state.selectedCategory )
       }
       return state.products;
@@ -45,8 +45,14 @@ export default createStore<StoreState>({
      
     },
 
-    productById(state, id: number){
+    productById: (state) => (id: number) => {
       return state.products.filter( p => p.dbaseId === id);
+    },
+
+    productsByUser(state): Product[]{
+      var userId = (JSON.parse(localStorage.getItem("User") as string) as User).dbaseId;
+      console.log(userId);
+      return state.products.filter( p => p.ownerId === userId);
     },
 
     categories(state): Category[]{
@@ -59,7 +65,7 @@ export default createStore<StoreState>({
     selectedCategory(state): string{
       return state.selectedCategory;
     },
-    
+
     context(state): Context{
       //TODO: Moze to nie najlepsze wyjscie - do sprawdzenia
       if(localStorage.hasOwnProperty("User")){
@@ -140,6 +146,8 @@ export default createStore<StoreState>({
       localStorage.removeItem("JWT");
     },
 
+    
+
 
   },
   actions: {
@@ -180,6 +188,9 @@ export default createStore<StoreState>({
       let data = await task();
     },
 
+
+
+    //getters with params
 
   },
   modules: {

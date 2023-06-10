@@ -26,6 +26,8 @@
     </div>
     <div v-else>
         <p>Nie znaleziono produktu.</p>
+
+        
     </div>
 
 
@@ -38,7 +40,7 @@ import { Product } from '@/data/entities';
 import { defineComponent, onMounted, PropType } from 'vue';
 import Header from '@/components/Header.vue';
 import { HttpHandler } from '@/data/httpHandler';
-import { mapGetters, mapMutations, mapState } from 'vuex';
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex';
 import { StoreState } from '@/store';
 import { useStore } from 'vuex';
 import ImageSlider from '@/components/ImageSlider.vue';
@@ -55,16 +57,19 @@ export default defineComponent({
         const store = useStore();
         const httpHandler = new HttpHandler();
         onMounted(()=> {
-            store.dispatch("loadStoredProduct", httpHandler.loadStoredProduct)
+           // store.dispatch("loadStoredProduct", httpHandler.loadStoredProduct)
         })
+
+        return {
+            productId: 0,
+        }
     },
     computed:{
-        ...mapState<StoreState>({
-            context: (state: StoreState) => state.context,
-            products: (state: StoreState) => state.products,
-            storedProduct: (state: StoreState) => state.storedProduct
-        }),
-        ...mapGetters(["productById", "products", "storedProduct"]),
+        ...mapGetters(["productById","products", "storedProduct"]),
+
+        productByIdHelper(){
+            return this.productById(this.productId);
+        }
         
 
     },
@@ -72,12 +77,13 @@ export default defineComponent({
         ...mapMutations({
             handleStoredProduct: "addStoredProduct",
             setActualProductId: "setActualProductId"
-        })
+        }),
+
     },
     beforeMount(){
         var path: string = this.$route.path;
-        var id =  path.substring(path.lastIndexOf('/')+1, path.length);
-        this.setActualProductId(id);
+        this.productId = parseInt(path.substring(path.lastIndexOf('/')+1, path.length));
+        this.setActualProductId(this.productId);
     },
     beforeUnmount(){
         this.setActualProductId(0);

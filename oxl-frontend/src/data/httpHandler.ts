@@ -22,20 +22,24 @@ function urlBuilder(x: string): string {
 }
 
 function headerBuilder(){
-    var context: Context = StoreState.getters.context; //TODO: To dotyczy tego wyzej i tez moze byc zdrutowane ale dziala wiec ye*ac
-    if(!context.currentJWT){
+    var JWT = localStorage.getItem("JWT"); //TODO: To dotyczy tego wyzej i tez moze byc zdrutowane ale dziala wiec ye*ac
+    if(!JWT){
         console.log("JWT token not provided");
     }
     var header = {
-        Authorization: `Baerer ${context.currentJWT}`,
-        'Content-Type': `application/json`, 
+        headers: {
+            "Authorization": `Bearer ${JWT}`,
+            "Content-Type": `application/json`, 
+        }
     };
+    console.log(header);
 
     return header;
 }
 
 const urls = {
     products: urlBuilder("products"),
+    productsByUser: urlBuilder(`products/users/${(JSON.parse(localStorage.getItem("User") as string) as User).dbaseId}`),
     orders: `${protocol}://${hostname}:${port}/orders`,
 
     login: urlBuilder("login"),
@@ -50,37 +54,48 @@ const axios = require('axios');
 export class HttpHandler{
 
     loadProducts() : Promise<Product[]>{
-        return axios.get(urls.products,{headers: headerBuilder() }).then((response: { data: Product[]; }) => response.data).catch((error: any) => console.log(error.response));
+        const headers = headerBuilder();
+        return axios.get(urls.products, headers).then((response: { data: Product[]; }) => response.data).catch((error: any) => console.log(error.response));
+    }
+
+    loadProductsByUser(): Promise<Product[]>{
+        const headers = headerBuilder();
+        return axios.get(urls.productsByUser, headers).then((response: { data: Product[]; }) => response.data).catch((error: any) => console.log(error.response));
     }
 
     loadStoredProduct(): Promise<Product[]>{
+        const headers = headerBuilder();
         var id = useStore().state.actualProductId;
-        return axios.get(`${urls.products}/${id}`, {headers: headerBuilder() }).then((response: { data: Product[]; }) => response.data).catch((error: any) => console.log(error.response));
+        return axios.get(`${urls.products}/${id}`, headers).then((response: { data: Product[]; }) => response.data).catch((error: any) => console.log(error.response));
     }
 
 
     loadCategories() : Promise<Category[]>{
-        return axios.get(urls.categories).then((response: {data: Category[]}) => response.data).catch((error: DefaultErrorResponse) => console.log(error));
+        const headers = headerBuilder();
+        return axios.get(urls.categories, headers).then((response: {data: Category[]}) => response.data).catch((error: DefaultErrorResponse) => console.log(error));
     }
 
     loadUsers() : Promise<User[]>{
-        return axios.get(urls.users).then((response: {data: User[]}) => response.data).catch(() => console.log());
+        const headers = headerBuilder();
+        return axios.get(urls.users, headers).then((response: {data: User[]}) => response.data).catch(() => console.log());
     }
 
     
     login(loginData : any): Promise<LoginResponse>{
+        const headers = headerBuilder();
         console.log(loginData.email);
         var tmp = JSON.stringify({
             "email": loginData.email,
             "password": secureLogin(loginData.password)
         });
         console.log(tmp);
-        return axios.post(urls.login, tmp, {'Content-Type': 'application/json'})
+        return axios.post(urls.login, tmp, headers)
         .then((response: {data: LoginResponse | any; }) => { console.log(response.data); return response.data})
         .catch((error: any) => console.log(error.response));
     }
 
     register(registerData: RegistrationForm): Promise<RegisterResponse | DefaultErrorResponse>{
+        const headers = headerBuilder();
         var tmp = JSON.stringify({
             "name": registerData.firstName,
             "surname": registerData.lastName,
@@ -91,7 +106,7 @@ export class HttpHandler{
             "password": secureLogin(registerData.password1)
         });
         console.log(tmp);
-        return axios.post(urls.register, tmp, {'Content-Type': 'application/json'})
+        return axios.post(urls.register, tmp, headers)
         .then((response: {data: RegisterResponse | DefaultErrorResponse}) => { 
             return response.data;
         }).catch((error: any) => {
@@ -102,10 +117,16 @@ export class HttpHandler{
     addProduct(product: NewProductForm): Promise<AddProductResponse | DefaultErrorResponse>{
         var tmp = JSON.stringify({
             name: product.name,
+            price: product.price,
+            quantity: product.quantity,
+            description: product.description,
+            categoryId: product.categoryId,
+            
 
         });
         console.log(tmp);
-        return axios.post(urls.addProduct, tmp, {headers: headerBuilder() })
+        const headers = headerBuilder();
+        return axios.post(urls.addProduct, tmp, headers)
         .then((response: {data: RegisterResponse | DefaultErrorResponse}) => { 
             return response.data;
         }).catch((error: any) => {

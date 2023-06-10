@@ -1,6 +1,6 @@
 <template>
     <RouterLink :to="{ path: '/products/'+product?.dbaseId}" class="product-container p-0 m-4 shadow rounded">
-        <img v-if="product?.imageURL[0] && isImageLoaded" :src="product?.imageURL[0]" class="img-fluid m-0 p-0 custom-img" @load="() => {isImageLoaded=true}" />
+        <img v-if="product?.imageURL[0]" :src="product?.imageURL[0]" class="img-fluid m-0 p-0 custom-img" @load="() => {isImageLoaded=true}" :hidden="!isImageLoaded"/>
         <img v-if="!product?.imageURL[0] || !isImageLoaded" src="http://trashv1.ct8.pl/media/No_Image_Available.jpg" class="img-fluid m-0 p-0 custom-img" />
         <div class="bottom-bar p-2 bg-secondary">
             <div class="d-flex align-items-start justify-content-between">
