@@ -1,5 +1,5 @@
 <template>
-    <div class="col-sm-12 col-md-6 col-lg-4 mt-4 text-center">
+    <div class="col-sm-12 col-md-12 col-lg-12 mt-4 text-center">
         <div class="p-3 alert" :class="{'alert-error':(alert.alertType == alertTypes.ERROR)}">{{ alert.message }}</div>
     </div>
 

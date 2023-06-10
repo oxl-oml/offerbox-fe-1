@@ -1,5 +1,5 @@
 <template>
-    <div class="row p-2 mt-4 h-100">
+    <div class="row p-2 mt-4">
                 <div class="col-sm-4 col-md-2 bg-light">
                     <h5>Witaj {{ userData.firstName }}!</h5>
 
@@ -9,8 +9,9 @@
                         </li>
                     </ul>
                 </div>
-
+                
                 <div class="col-sm-12 col-md-12 col-xl-10">
+                    <UserPanelMyAccount v-if="selected == menuItems[0]" />
                     
                 </div>
     </div>
@@ -21,27 +22,42 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import AdminPanelUsers from '../components/AdminPanels/AdminPanelUsers.vue';
+import UserPanelMyAccount from '@/components/UserPanels/UserPanelMyAccount.vue'
 import { Context } from '@/data/context';
 import { User } from '@/data/entities';
+import { mapMutations } from 'vuex';
+import router from '@/router';
 
 
 export default defineComponent({
     name: "UserPanel",
-    components: {AdminPanelUsers},
+    components: {AdminPanelUsers, UserPanelMyAccount},
     data() {
-        let menuItems : Array<string> = ['Moje konto', 'Moje produkty', 'Moje ulubione'];
+        let menuItems : Array<string> = ['Moje konto', 'Moje produkty', 'Moje ulubione', 'Wyloguj'];
         let selected: string = menuItems[0];
         return {menuItems, selected};
    },
 
    methods:{
+
+    ...mapMutations({
+            logout: "logout"
+        }),
+
     clickItem(item: string): void{
         this.selected = item;
+
+        //jezeli ostatni to wyloguj
+        if(item == this.menuItems[this.menuItems.length-1]){
+            console.log("Wyloguj!");
+            this.logout();
+            router.push("/");
+        }
+
     }
    },
    computed:{
       userData(): User{
-        //localStorage.setItem("User", JSON.stringify(new User(0,"JanJan", "Kowalski@wp.pl", "Jan", "Kowalski", "31343253", "none","USR","A")))
         var loggedUser: User = JSON.parse(localStorage.getItem("User") as string);
         return loggedUser;
       }

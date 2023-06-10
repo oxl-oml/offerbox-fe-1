@@ -4,20 +4,20 @@
             <Header />
         </div>
     </div>
-    <div v-if="storedProduct.dbaseId" class="container-md justify-content-center my-4">
-        <div class="product-top-bar row">
+    <div v-if="storedProduct.dbaseId" class="container-md justify-content-center my-4 bg-light rounded">
+        <div class="product-top-bar row p-3">
             <h3>{{ storedProduct?.name }}</h3>
-            <h5>{{ storedProduct?.price}}</h5>
+            <h5>{{ `${storedProduct?.price} zł` }}</h5>
         </div>
-        <div class="product-gallery">
-
+        <div class="row product-gallery">
+            <ImageSlider :images="storedProduct?.imageURL" class="col-md-8 d-flex justify-content-center align-items-center"/>
         </div>
         <div class="row">
-            <div class="product-description col-sm-12 col-md-8">
+            <div class="product-description col-sm-12 col-md-8 p-4">
                 <h5>Informacje o produkcie</h5>
                 <p>{{ storedProduct?.description }}</p>
             </div>
-            <div class="product-owner col-sm-12 col-md-4">
+            <div class="product-owner col-sm-12 col-md-4 p-4">
                 <h5>Informacje o sprzedającym</h5>
                 <p>{{ storedProduct?.ownerId }}</p>
             </div>
@@ -41,6 +41,7 @@ import { HttpHandler } from '@/data/httpHandler';
 import { mapGetters, mapMutations, mapState } from 'vuex';
 import { StoreState } from '@/store';
 import { useStore } from 'vuex';
+import ImageSlider from '@/components/ImageSlider.vue';
 
 //import { Carousel, Slide } from 'vue-carousel';
 
@@ -49,7 +50,7 @@ export default defineComponent({
     setup(){
         return {store: useStore()};
     },
-    components: {Header},
+    components: { Header, ImageSlider },
     data(){
         const store = useStore();
         const httpHandler = new HttpHandler();
@@ -87,11 +88,6 @@ export default defineComponent({
 </script>
 
 <style>
-.product-description{
-    background-color: antiquewhite;
-}
-.product-owner {
-    background-color: azure;
-}
+
 
 </style>

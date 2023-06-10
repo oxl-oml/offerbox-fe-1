@@ -5,8 +5,6 @@
         </div>
     </div>
     <div v-if="userData" class="container-fluid">
-        
-        {{ userData }}
         <UserPanel />
     </div>
     <div v-else>

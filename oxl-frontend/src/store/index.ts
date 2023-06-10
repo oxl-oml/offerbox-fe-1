@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import {User, Product, Category, LoginResponse, Alert, RegisterErrorResponse} from '@/data/entities'
+import {User, Product, Category, LoginResponse, Alert, DefaultErrorResponse, AddProductResponse} from '@/data/entities'
 import { Context } from '@/data/context';
 
 
@@ -14,7 +14,6 @@ export interface StoreState {
   actualProductId?: number,//store id catched from url
   actualAlert?: Alert
   
-
   //admin
   users: User[],
   selectedAdminOption: "",
@@ -53,13 +52,22 @@ export default createStore<StoreState>({
     categories(state): Category[]{
       return state.categories;
     },
+    trueCategories(state): Category[]{
+      return state.categories.filter( cat => cat.name != "All");
+    },
+
     selectedCategory(state): string{
       return state.selectedCategory;
     },
-    context(state){
+    
+    context(state): Context{
+      //TODO: Moze to nie najlepsze wyjscie - do sprawdzenia
+      if(localStorage.hasOwnProperty("User")){
+        state.context.currentUser = (JSON.parse(localStorage.getItem("User") as string)) as User;
+      }
       return state.context;
     },
-    storedProduct(state){
+    storedProduct(state): Product | undefined{
       return state.storedProduct;
     },
     actualProductId(state){
@@ -97,15 +105,15 @@ export default createStore<StoreState>({
       currentState.actualProductId = id;
     },
 
-    loginUser(currentState: StoreState, data: LoginResponse | RegisterErrorResponse){
+    loginUser(currentState: StoreState, data: LoginResponse | DefaultErrorResponse){
       console.log("Tutaj");
       console.log(data);
       if((data as LoginResponse)?.tokenData){
         data = data as LoginResponse;
         currentState.context.currentJWT = data.tokenData.token; //save JWT to store
         currentState.context.currentUser = data.user //save user to store
-        localStorage.setItem("User", JSON.stringify(data.user));
-        localStorage.setItem("JWT", data.tokenData.token);
+        localStorage.setItem("User", JSON.stringify(data.user)); //save user to cookies
+        localStorage.setItem("JWT", data.tokenData.token); //save jwt to cookies
         console.log(Context.getInstance());
       }
       else{   
@@ -123,7 +131,15 @@ export default createStore<StoreState>({
     },
     setActualAlert(currentState: StoreState, alert: Alert){
       currentState.actualAlert = alert;
-    }
+    },
+
+    logout(currentState: StoreState){
+      currentState.context.currentUser = undefined;
+      currentState.context.currentJWT = undefined;
+      localStorage.removeItem("User");
+      localStorage.removeItem("JWT");
+    },
+
 
   },
   actions: {
@@ -158,7 +174,13 @@ export default createStore<StoreState>({
     async register(context, task: () => Promise<Object>){
       let data = await task();
       // register nie odwoluje sie do mutacji, poniewaz efekt wywołania nie jest przechowywany
-    }
+    },
+
+    async addProduct(context, task: () => Promise<AddProductResponse>){
+      let data = await task();
+    },
+
+
   },
   modules: {
   }

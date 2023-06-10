@@ -5,7 +5,7 @@
         </div>
 
         <div class="row align-items-center justify-content-center">
-            <div class="col-sm-12 col-md-6 col-lg-4  mt-4">
+            <div class="col-sm-12 col-md-8 col-xl-4  mt-4">
                 <ProductForm />
             </div>
         </div>

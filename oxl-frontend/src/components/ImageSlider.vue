@@ -1,8 +1,5 @@
 <template>
-     <div>
-    <image-slider v-model="slides">
-      Sample Text
-    </image-slider>
+  <div v-for="image in images" class="custom-img-slider" :style="`background-image: url(${image})`">
   </div>
 </template>
 
@@ -11,21 +8,35 @@
 <script lang="ts">
 
 import '@gaiaz/vue-image-slider/dist/image-slider.css'
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 
 export default defineComponent({
-  data () {
-    return {
-      slides: [
-        'https://dummyimage.com/300&text=1',
-        'https://dummyimage.com/300&text=2'
-      ]
+  name:"ImageSlider",
+  props:{
+    images:{
+      type: Object as PropType<string[]>,
+      required: true
     }
   },
-  components: {
-    
+  data () {
   }
+  
 })
 
 
 </script>
+
+<style>
+.custom-img-slider{
+  overflow: hidden;
+  max-width: 100%;
+  min-height: 45vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-clip: padding-box;
+}
+
+</style>
+
+TODO: Zrobić lepszy slider

@@ -25,7 +25,11 @@ export type RegisterResponse = {
     role: string
 }
 
-export type RegisterErrorResponse = {
+export type AddProductResponse = {
+    productId: number
+}
+
+export type DefaultErrorResponse = {
     status: string,
     statusCode: number,
     timestamp: number,
@@ -108,6 +112,17 @@ export class LoginForm{
     constructor(
         public email: string,
         public password: string
+    ){}
+}
+
+export class NewProductForm{
+    constructor(
+        public name: string,
+        public description: string,
+        public categoryId: number,
+        public price: number,
+        public quantity: number,
+        public images: string[]
     ){}
 }
 

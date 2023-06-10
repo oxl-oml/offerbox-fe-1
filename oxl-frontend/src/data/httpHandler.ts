@@ -1,5 +1,5 @@
 //import { Axios } from "axios";
-import {Product, User, Category, LoginResponse, RegistrationForm, RegisterResponse, RegisterErrorResponse, Alert, AlertTypes} from "./entities";
+import {Product, NewProductForm, User, Category, LoginResponse, RegistrationForm, RegisterResponse, DefaultErrorResponse, AddProductResponse, Alert, AlertTypes} from "./entities";
 import  StoreState  from "@/store/index"; //TODO: Sprawnic, czy to nie jest zdrutowane
 import { useStore } from 'vuex';
 import { Context } from "./context";
@@ -27,8 +27,10 @@ function headerBuilder(){
         console.log("JWT token not provided");
     }
     var header = {
-        Authorization: `Baerer ${context.currentJWT}` 
-    }
+        Authorization: `Baerer ${context.currentJWT}`,
+        'Content-Type': `application/json`, 
+    };
+
     return header;
 }
 
@@ -39,7 +41,8 @@ const urls = {
     login: urlBuilder("login"),
     register: urlBuilder("register"),
     categories: urlBuilder("categories"),
-    users: urlBuilder("users")
+    users: urlBuilder("users"),
+    addProduct: urlBuilder("products")
 };
 
 const axios = require('axios');
@@ -57,7 +60,7 @@ export class HttpHandler{
 
 
     loadCategories() : Promise<Category[]>{
-        return axios.get(urls.categories).then((response: {data: Category[]}) => response.data).catch((error: any) => console.log(error.response));
+        return axios.get(urls.categories).then((response: {data: Category[]}) => response.data).catch((error: DefaultErrorResponse) => console.log(error));
     }
 
     loadUsers() : Promise<User[]>{
@@ -77,7 +80,7 @@ export class HttpHandler{
         .catch((error: any) => console.log(error.response));
     }
 
-    register(registerData: RegistrationForm): Promise<RegisterResponse | RegisterErrorResponse>{
+    register(registerData: RegistrationForm): Promise<RegisterResponse | DefaultErrorResponse>{
         var tmp = JSON.stringify({
             "name": registerData.firstName,
             "surname": registerData.lastName,
@@ -86,14 +89,29 @@ export class HttpHandler{
             "phoneNumber": registerData.phone,
             "profileImageSrc": "https://en.wikipedia.org/wiki/John_Doe#/media/File:John_and_Jane_Doe_Headstones.jpg",
             "password": secureLogin(registerData.password1)
-        })
+        });
         console.log(tmp);
         return axios.post(urls.register, tmp, {'Content-Type': 'application/json'})
-        .then((response: {data: RegisterResponse | RegisterErrorResponse}) => { 
+        .then((response: {data: RegisterResponse | DefaultErrorResponse}) => { 
             return response.data;
         }).catch((error: any) => {
             console.log(error);
         });
+    }
+
+    addProduct(product: NewProductForm): Promise<AddProductResponse | DefaultErrorResponse>{
+        var tmp = JSON.stringify({
+            name: product.name,
+
+        });
+        console.log(tmp);
+        return axios.post(urls.addProduct, tmp, {headers: headerBuilder() })
+        .then((response: {data: RegisterResponse | DefaultErrorResponse}) => { 
+            return response.data;
+        }).catch((error: any) => {
+            console.log(error);
+        });
+
     }
 
 
