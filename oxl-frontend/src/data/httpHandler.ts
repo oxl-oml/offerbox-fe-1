@@ -39,6 +39,7 @@ function headerBuilder(){
 
 const urls = {
     products: urlBuilder("products"),
+    productsByUser: urlBuilder(`products/users/${(JSON.parse(localStorage.getItem("User") as string) as User).dbaseId}`),
     orders: `${protocol}://${hostname}:${port}/orders`,
 
     login: urlBuilder("login"),
@@ -55,6 +56,11 @@ export class HttpHandler{
     loadProducts() : Promise<Product[]>{
         const headers = headerBuilder();
         return axios.get(urls.products, headers).then((response: { data: Product[]; }) => response.data).catch((error: any) => console.log(error.response));
+    }
+
+    loadProductsByUser(): Promise<Product[]>{
+        const headers = headerBuilder();
+        return axios.get(urls.productsByUser, headers).then((response: { data: Product[]; }) => response.data).catch((error: any) => console.log(error.response));
     }
 
     loadStoredProduct(): Promise<Product[]>{

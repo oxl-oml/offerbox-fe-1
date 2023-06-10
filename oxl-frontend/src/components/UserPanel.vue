@@ -12,7 +12,7 @@
                 
                 <div class="col-sm-12 col-md-12 col-xl-10">
                     <UserPanelMyAccount v-if="selected == menuItems[0]" />
-                    
+                    <UserPanelMyProducts v-else-if="selected == menuItems[1]" />
                 </div>
     </div>
 
@@ -27,11 +27,12 @@ import { Context } from '@/data/context';
 import { User } from '@/data/entities';
 import { mapMutations } from 'vuex';
 import router from '@/router';
+import UserPanelMyProducts from './UserPanels/UserPanelMyProducts.vue';
 
 
 export default defineComponent({
     name: "UserPanel",
-    components: {AdminPanelUsers, UserPanelMyAccount},
+    components: { AdminPanelUsers, UserPanelMyAccount, UserPanelMyProducts },
     data() {
         let menuItems : Array<string> = ['Moje konto', 'Moje produkty', 'Moje ulubione', 'Wyloguj'];
         let selected: string = menuItems[0];
