@@ -26,6 +26,8 @@
     </div>
     <div v-else>
         <p>Nie znaleziono produktu.</p>
+
+        
     </div>
 
 
