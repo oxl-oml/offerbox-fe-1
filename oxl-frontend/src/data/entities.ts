@@ -1,4 +1,4 @@
-interface IGetters{
+interface IGetters {
     fixedPrice: string
 }
 
@@ -9,7 +9,6 @@ export type RegistrationForm = {
     phone: string,
     password1: string,
     password2: string
-    
 }
 
 export type LoginResponse = {
@@ -49,18 +48,17 @@ export class Product implements IGetters {
         public ownerId: number,
         public imageURL: string[],
         public localId?: number
+    ) {
+    };
 
-    ){};
-
-    public get fixedPrice(): string{
-        return "DD";
+    public get fixedPrice(): string {
         return (this.price.toFixed(2) + ' zł').toString();
     }
 
-    public FixedPrice(): string{
+    public FixedPrice(): string {
         return (this.price.toFixed(2) + ' zł').toString();
     }
-    
+
 }
 
 export class Category {
@@ -69,8 +67,8 @@ export class Category {
         public parentId: number,
         public name: string,
         public description: string
-        
-    ){};
+    ) {
+    };
 }
 
 
@@ -86,36 +84,40 @@ export class User {
         public profileImageUrl: string,
         private role: string,
         public accountStatus: string
-    ){}
-
-    public isAdmin(): boolean{
-        return this.role=="admin"?true:false;
+    ) {
     }
 
-    public isSuperAdmin():boolean{
-        return this.role=="todo"?true:false;
+    public isAdmin(): boolean {
+        return this.role == "admin" ? true : false;
+    }
+
+    public isSuperAdmin(): boolean {
+        return this.role == "todo" ? true : false;
         //TODO
     }
+
 }
 
-export class Role{
+export class Role {
     constructor(
         id_role: number,
         name: string,
         code: string,
         description: string
-    ){}
+    ) {
+    }
 }
 
 
-export class LoginForm{
+export class LoginForm {
     constructor(
         public email: string,
         public password: string
-    ){}
+    ) {
+    }
 }
 
-export class NewProductForm{
+export class NewProductForm {
     constructor(
         public name: string,
         public description: string,
@@ -123,7 +125,8 @@ export class NewProductForm{
         public price: number,
         public quantity: number,
         public images: string[]
-    ){}
+    ) {
+    }
 }
 
 
@@ -132,12 +135,14 @@ export enum AlertTypes {
     WARNING,
     INFORMATION
 }
-export class Alert{
+
+export class Alert {
 
     constructor(
         public alertType: AlertTypes,
         public message: string
-    ){}
+    ) {
+    }
 }
 
 
