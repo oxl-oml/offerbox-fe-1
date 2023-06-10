@@ -4,22 +4,22 @@
             <Header />
         </div>
     </div>
-    <div v-if="store.getters.productById(productId).dbaseId" class="container-md justify-content-center my-4 bg-light rounded">
+    <div v-if="storedProduct.dbaseId" class="container-md justify-content-center my-4 bg-light rounded">
         <div class="product-top-bar row p-3">
-            <h3>{{ store.getters.productById(productId)?.name }}</h3>
-            <h5>{{ `${productById(productId)?.price} zł` }}</h5>
+            <h3>{{ storedProduct?.name }}</h3>
+            <h5>{{ `${storedProduct?.price} zł` }}</h5>
         </div>
         <div class="row product-gallery">
-            <ImageSlider :images="productById(productId)?.imageURL" class="col-md-8 d-flex justify-content-center align-items-center"/>
+            <ImageSlider :images="storedProduct?.imageURL" class="col-md-8 d-flex justify-content-center align-items-center"/>
         </div>
         <div class="row">
             <div class="product-description col-sm-12 col-md-8 p-4">
                 <h5>Informacje o produkcie</h5>
-                <p>{{ productById(productId)?.description }}</p>
+                <p>{{ storedProduct?.description }}</p>
             </div>
             <div class="product-owner col-sm-12 col-md-4 p-4">
                 <h5>Informacje o sprzedającym</h5>
-                <p>{{ productById(productId)?.ownerId }}</p>
+                <p>{{ storedProduct?.ownerId }}</p>
             </div>
         </div>
         
