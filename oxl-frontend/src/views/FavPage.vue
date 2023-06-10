@@ -6,7 +6,7 @@
     </div> 
 
     <div class="container-lg ">
-       <ProductList />
+       
     </div>
 
 </template>

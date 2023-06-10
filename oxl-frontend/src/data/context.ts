@@ -13,22 +13,19 @@ export class Context {
     }
 
 
-    /* Connection with API */
-    private readonly apiProtocol = "http";
-    private readonly apiHostname = "localhost";
-    private readonly apiPort = 4601;
-
-
     /* State variables */
-    public currentUser?: User = new User(0, "dd", "dd@dd.pl", "Adam", "Kowalski", "3142343", "dd", "dd", "dd");
+    public currentUser?: User;
     public currentJWT?: string;
+    
 
     public isAdmin(): boolean{
-        return this.currentUser?.isAdmin() || false;
+        //return this.currentUser?.isAdmin() || false;
+        return true;
     }
 
     public isLogged(): boolean{
-        return this.currentUser?true:false;
+       // return this.currentUser?true:false;
+       return true;
     }
     
 

@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import {User, Product, Category, LoginResponse} from '@/data/entities'
+import {User, Product, Category, LoginResponse, Alert, DefaultErrorResponse, AddProductResponse} from '@/data/entities'
 import { Context } from '@/data/context';
 
 
@@ -11,17 +11,25 @@ export interface StoreState {
   selectedCategory: string,//store selected category
   context: Context,       //store user data like JWT
   storedProduct?: Product, //store product in /product/id page
-  actualProductId?: number //store id catched from url
+  actualProductId?: number,//store id catched from url
+  actualAlert?: Alert
+  
+  //admin
+  users: User[],
+  selectedAdminOption: "",
+
 
 }
 
 export default createStore<StoreState>({
   state: {
-    products: [new Product("Rower miejski składany", "Lorem ipsum", "Sport", 39.990000000000002, 1, 1, 1001, [])],
-    categories: [new Category(0,0,"All","")],
+    products: [],
+    categories: [],
     selectedCategory: 'All',
     context: Context.getInstance(),
-    storedProduct: new Product("Rower miejski składany", "Lorem ipsum", "Sport", 39.990000000000002, 1, 1, 1001, [])
+    storedProduct: new Product("", "", "", 0, 0, 0, 0, []),
+    users: [],
+    selectedAdminOption: "",
 
   },
   getters: {
@@ -44,17 +52,34 @@ export default createStore<StoreState>({
     categories(state): Category[]{
       return state.categories;
     },
+    trueCategories(state): Category[]{
+      return state.categories.filter( cat => cat.name != "All");
+    },
+
     selectedCategory(state): string{
       return state.selectedCategory;
     },
-    context(state){
+    
+    context(state): Context{
+      //TODO: Moze to nie najlepsze wyjscie - do sprawdzenia
+      if(localStorage.hasOwnProperty("User")){
+        state.context.currentUser = (JSON.parse(localStorage.getItem("User") as string)) as User;
+      }
       return state.context;
     },
-    storedProduct(state){
+    storedProduct(state): Product | undefined{
       return state.storedProduct;
     },
     actualProductId(state){
       return state.storedProduct;
+    },
+    actualAlert(state){
+      return state.actualAlert;
+    },
+
+    //for admin
+    users(state){
+      return state.users;
     }
 
   },
@@ -80,11 +105,41 @@ export default createStore<StoreState>({
       currentState.actualProductId = id;
     },
 
-    loginUser(currentState: StoreState, data: LoginResponse){
+    loginUser(currentState: StoreState, data: LoginResponse | DefaultErrorResponse){
+      console.log("Tutaj");
       console.log(data);
-      currentState.context.currentJWT = data.token;
-      console.log(Context.getInstance().currentJWT);
-    }
+      if((data as LoginResponse)?.tokenData){
+        data = data as LoginResponse;
+        currentState.context.currentJWT = data.tokenData.token; //save JWT to store
+        currentState.context.currentUser = data.user //save user to store
+        localStorage.setItem("User", JSON.stringify(data.user)); //save user to cookies
+        localStorage.setItem("JWT", data.tokenData.token); //save jwt to cookies
+        console.log(Context.getInstance());
+      }
+      else{   
+        console.log("I have NO token for you... looser!");
+      }
+    },
+
+    addTemporaryEmailToUser(currentState: StoreState, email: string){
+      currentState.context.currentUser = new User(0, "", email, "", "", "", "", "", "");
+    },
+
+    addUsers(currentState: StoreState, users: User[]){
+      console.log(users);
+      currentState.users = users;
+    },
+    setActualAlert(currentState: StoreState, alert: Alert){
+      currentState.actualAlert = alert;
+    },
+
+    logout(currentState: StoreState){
+      currentState.context.currentUser = undefined;
+      currentState.context.currentJWT = undefined;
+      localStorage.removeItem("User");
+      localStorage.removeItem("JWT");
+    },
+
 
   },
   actions: {
@@ -110,8 +165,22 @@ export default createStore<StoreState>({
     async login(context, task: () => Promise<Context>){
       let data = await task();
       context.commit("loginUser", data);
-    }
-    
+    },
+
+    async loadUserByEmail(context, task: () => Promise<User>){
+
+    },
+
+    async register(context, task: () => Promise<Object>){
+      let data = await task();
+      // register nie odwoluje sie do mutacji, poniewaz efekt wywołania nie jest przechowywany
+    },
+
+    async addProduct(context, task: () => Promise<AddProductResponse>){
+      let data = await task();
+    },
+
+
   },
   modules: {
   }

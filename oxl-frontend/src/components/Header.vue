@@ -32,8 +32,9 @@
                 Zaloguj się, aby korzystać ze wszystkich funkcjonalności serwisu!
             </span>
             <div id="account-bar" class="d-flex flex-row-reverse justify-content-between mx-4">
-                <RouterLink to="/" v-if="context.currentUser" :title="''">
-                    <img src="../assets/icons/my-account.svg" class="img-icons-white c-tooltip"/>
+                <RouterLink to="/myprofile" v-if="context.currentUser" :title="`${context.currentUser.firstName} ${context.currentUser.lastName}`">
+                    <img v-if="context.currentUser.profileImageUrl && isImgLoaded" :src="context.currentUser.profileImageUrl" class="img-icons-white c-tooltip" @load="() => {isImgLoaded = true}" />
+                    <img v-if="!context.currentUser.profileImageUrl || !isImgLoaded" src="../assets/icons/my-account.svg" class="img-icons-white c-tooltip"/>
                 </RouterLink>
                 <LoginRegister to="/" v-else="context.currentUser" />
 
@@ -48,15 +49,18 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import {Context} from '../data/context'
 import { User } from '@/data/entities';
 import LoginRegister from './LoginRegister.vue';
 import { mapGetters } from 'vuex';
 import { useStore } from 'vuex';
+import { Context } from '@/data/context';
 
 export default defineComponent({
     setup(){
-        return {store : useStore()}
+        return {
+            store : useStore(),
+            isImgLoaded: false
+        }
     },
     name: "Header",
     props: {
@@ -68,8 +72,8 @@ export default defineComponent({
         loggeduser(): User | null {
             return this.user ? this.user : null;
         },
+
         ...mapGetters(["context"])
-        
     },
     methods:{
         

@@ -21,12 +21,12 @@
 import { HttpHandler } from '@/data/httpHandler';
 import { defineComponent, PropType, VueElement } from 'vue';
 import {LoginForm} from '@/data/entities'
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
+import router from '@/router';
 
 export default defineComponent({
     name: "LoginForm",
     data(){
-
         return {
             loginForm:{
                 email: null,
@@ -37,15 +37,23 @@ export default defineComponent({
     methods:{
 
         ...mapActions(["login"]),
-
-        submit(){
-            console.log(this.loginForm);
-            this.$emit('submitLogin', this.loginForm);
-        },
+        ...mapMutations({
+            loginMutation: "loginUser",
+            addTemporaryEmailToUser: "addTemporaryEmailToUser"
+        }),
+        
         
         tryLogin(){
-            this.login((data: LoginForm) => {
-                return new HttpHandler().login(this.loginForm).then(()=> console.log("login"))
+            this.login(() => {
+                this.$emit("TryLogin");
+                this.addTemporaryEmailToUser(this.loginForm.email);
+                return new HttpHandler().login(this.loginForm)
+                .then((data)=> {
+                console.log("Ostatnie?"); 
+                console.log(data); 
+                this.loginMutation(data)
+                router.push({path:"/myprofile"})
+            })
             })
         }
     }

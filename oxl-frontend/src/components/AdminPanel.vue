@@ -1,6 +1,6 @@
 <template>
     <div class="row p-2 mt-4">
-                <div class="col-md-3">
+                <div class="col-sm-4 col-md-2">
                     <h5>Zadania administracyjne</h5>
 
                     <div v-for="item in menuItems" class="d-flex direction-row" >
@@ -11,7 +11,7 @@
 
                 </div>
 
-                <div class="col-md-9">
+                <div class="col-sm-12 col-md-12 col-xl-10">
                     <AdminPanelUsers v-if="selected == 'Users'" />
                 </div>
     </div>

@@ -86,4 +86,7 @@ export default defineComponent({
 #main-element{
     user-select: none;
 }
+.app-wrapper {
+    min-height: 100vh;
+  }
 </style>
