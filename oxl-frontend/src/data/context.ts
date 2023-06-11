@@ -17,13 +17,13 @@ export class Context {
     public currentJWT?: string;
 
     public isAdmin(): boolean{
-        //return this.currentUser?.isAdmin() || false;
-        return true;
+        return this.currentUser?.isAdmin() || false;
+        //return true;
     }
 
     public isLogged(): boolean{
-       // return this.currentUser?true:false;
-       return true;
+       return this.currentUser?true:false;
+       //return true;
     }
 
 }
