@@ -10,16 +10,16 @@
             <h5>{{ `${productById?.price} zł` }}</h5>
         </div>
         <div class="row product-gallery">
-            <ImageSlider :images="storedProduct?.imageURL" class="col-md-8 d-flex justify-content-center align-items-center"/>
+            <ImageSlider :images="productById?.imageURL" class="col-md-8 d-flex justify-content-center align-items-center"/>
         </div>
         <div class="row">
             <div class="product-description col-sm-12 col-md-8 p-4">
                 <h5>Informacje o produkcie</h5>
-                <p>{{ storedProduct?.description }}</p>
+                <p>{{ productById?.description }}</p>
             </div>
             <div class="product-owner col-sm-12 col-md-4 p-4">
                 <h5>Informacje o sprzedającym</h5>
-                <p>{{ storedProduct?.ownerId }}</p>
+                <p>{{ productById?.ownerId }}</p>
             </div>
         </div>
         
@@ -57,7 +57,7 @@ export default defineComponent({
         const httpHandler = new HttpHandler();
         onMounted(()=> {
             //store.dispatch("loadStoredProduct", httpHandler.loadStoredProduct)
-            store.dispatch("loadProduct", httpHandler.loadProductById)
+            //store.dispatch("loadProduct", httpHandler.loadProductById)
         })
 
         return {
@@ -65,13 +65,12 @@ export default defineComponent({
         }
     },
     computed:{
-        ...mapGetters(["productById","products", "storedProduct"]),
+        ...mapGetters(["productById"]),
 
         
     },
     methods:{
         ...mapMutations({
-            //handleStoredProduct: "addStoredProduct",
             setActualProductId: "setActualProductId"
         }),
 
@@ -81,9 +80,12 @@ export default defineComponent({
         this.productId = parseInt(path.substring(path.lastIndexOf('/')+1, path.length));
         this.setActualProductId(this.productId);
     },
-    beforeUnmount(){
-        //this.setActualProductId(0);
-    }
+    mounted() {
+        if(!this.productById){
+            const httpHandler: HttpHandler = new HttpHandler();
+            this.store.dispatch("loadProduct", httpHandler.loadProductById)
+        }
+    },
     
 })
 
