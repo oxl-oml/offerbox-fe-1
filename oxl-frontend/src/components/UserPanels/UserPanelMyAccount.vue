@@ -47,9 +47,9 @@
               <div class="col-sm-9">
                 <p class="text-muted mb-0">{{ context.currentUser.accountStatus ?? "" }} -
                   {{ UserAccountStatus.translate(context.currentUser.accountStatus) }}</p>
-                <span v-if="context.currentUser.accountStatus === 'U'" class="form-text">
+                <span v-if="context.currentUser.accountStatus === 'U'" class="form-text" style="color: red;">
                   <i class="bi bi-exclamation-circle"></i>
-                  Twoje konto nie jest zweryfikowane! Możesz nie mieć dostępu do niektórych funkcjonalności.
+                  Twoje konto nie jest zweryfikowane. Możesz nie mieć dostępu do niektórych funkcjonalności. Kliknij w link w wiadomości przesłanej mailem by dokończyc aktywacje konta.
                 </span>
               </div>
             </div>

@@ -1,5 +1,5 @@
 <template>
-    <h5> <i class="bi bi-cart-check-fill"></i> Zarządzanie produkatami</h5>
+    <h5> <i class="bi bi-cart-check-fill"></i> Zarządzanie Produkatami</h5>
      <table class="interactive-table" v-if="products[0]">
  
          <tr>

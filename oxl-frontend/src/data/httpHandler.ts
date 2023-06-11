@@ -19,6 +19,7 @@ import { Context } from "./context";
 import secureLogin from "@/data/scripts/secureLogin"
 import router from "@/router";
 import LoginPage from "@/views/LoginPage.vue"
+import { Axios } from "axios";
 
 //connection
 const protocol = "https";
@@ -58,6 +59,7 @@ const urls = {
     register: urlBuilder("register"),
     categories: urlBuilder("categories"),
     users: urlBuilder("users"),
+    allUsersReport: urlBuilder("users/report"),
     changePassword: urlBuilder("users/password"),
     addProduct: urlBuilder("products")
 };
@@ -96,6 +98,13 @@ export class HttpHandler{
         return axios.get(urls.users, headers).then((response: {data: User[]}) => response.data).catch(() => console.log());
     }
 
+    loadReports() : Promise<Blob>{
+        const headers = headerBuilder();
+        return axios.get(urls.allUsersReport, headers)
+        .then((response: { data: Blob; }) => response.data)
+        .catch(() => console.log());
+    }
+
     
     login(loginData : any): Promise<LoginResponse | DefaultErrorResponse>{
         const headers = headerBuilder();
@@ -118,15 +127,15 @@ export class HttpHandler{
             "username": (`${registerData.firstName}_${registerData.lastName}_${Math.floor(Math.random()*99999)}`).toLowerCase(),
             "email": registerData.email,
             "phoneNumber": registerData.phone,
-            "profileImageSrc": "",
+            "profileImageSrc": "https://en.wikipedia.org/wiki/John_Doe#/media/File:John_and_Jane_Doe_Headstones.jpg",
             "password": secureLogin(registerData.password1)
         });
         console.log(tmp);
         return axios.post(urls.register, tmp, headers)
-        .then((response: {data: RegisterResponse }) => { 
+        .then((response: {data: RegisterResponse | DefaultErrorResponse}) => { 
             return response.data;
         }).catch((error: any) => {
-            return error.response.data as DefaultErrorResponse;
+            console.log(error);
         });
     }
 

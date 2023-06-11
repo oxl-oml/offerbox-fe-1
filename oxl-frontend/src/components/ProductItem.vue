@@ -55,7 +55,7 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: ghostwhite;
+    background-color: #27292b;
 }
 
 
