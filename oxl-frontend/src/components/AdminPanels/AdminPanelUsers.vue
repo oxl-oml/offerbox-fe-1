@@ -1,5 +1,5 @@
 <template>
-   <h5>Zarządzanie użytkownikami</h5>
+   <h5> <i class="bi bi-person-fill-exclamation"></i> Zarządzanie użytkownikami</h5>
     <table class="interactive-table" v-if="users[0]">
 
         <tr>
