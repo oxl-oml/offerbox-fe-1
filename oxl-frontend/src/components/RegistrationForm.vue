@@ -28,7 +28,7 @@
     <div class="mb-3">
       <label for="inputPassword1" class="form-label">Hasło</label>
       <div class="input-group">
-        <input v-model="registerData.password1" v-bind:type="[showPassword ? 'text' : 'password']" class="form-control"
+        <input v-model="registerData.password1" v-bind:type="showPassword ? 'text' : 'password'" class="form-control"
                id="inputPassword2"
                placeholder="********" required/>
         <div class="input-group-append">
@@ -42,7 +42,7 @@
     <div class="mb-3">
       <label for="inputPassword2" class="form-label">Powtórz hasło</label>
       <div class="input-group">
-        <input v-model="registerData.password2" v-bind:type="[showPassword ? 'text' : 'password']" class="form-control" id="inputPassword2"
+        <input v-model="registerData.password2" v-bind:type="showPassword ? 'text' : 'password'" class="form-control" id="inputPassword2"
                placeholder="********" required/>
         <div class="input-group-append">
           <span role="button" class="input-group-text" @click="showPassword = !showPassword">

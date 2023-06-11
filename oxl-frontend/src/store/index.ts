@@ -45,8 +45,8 @@ export default createStore<StoreState>({
      
     },
 
-    productById: (state) => (id: number) => {
-      return state.products.filter( p => p.dbaseId === id);
+    productById(state) : Product{
+      return state.products[0];
     },
 
     productsByUser(state): Product[]{
@@ -154,6 +154,11 @@ export default createStore<StoreState>({
     async loadProducts(context, task: () => Promise<Product[]>){
       let data = await task();
       context.commit("addProducts", data);
+    },
+
+    async loadProduct(context, task: () => Promise<Product>){
+      let data = await task();
+      context.commit("addProducts", [data]);
     },
 
     async loadStoredProduct(context, task: () => Promise<Product>){
