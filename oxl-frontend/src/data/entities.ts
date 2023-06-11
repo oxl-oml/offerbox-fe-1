@@ -124,7 +124,7 @@ export class User {
         public lastName: string,
         public phoneNumber: string,
         public profileImageUrl: string,
-        private role: string,
+        public role: string,
         public accountStatus: string
     ){}
 
