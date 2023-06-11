@@ -57,7 +57,7 @@ export default createStore<StoreState>({
     },
 
     productsByUser(state): Product[]{
-      var userId = (JSON.parse(localStorage.getItem("User") as string) as User).dbaseId;
+      var userId = (JSON.parse(localStorage.getItem("User") as string) as User)?.dbaseId;
       console.log(userId);
       return state.products.filter( p => p.ownerId === userId);
     },
@@ -199,6 +199,10 @@ export default createStore<StoreState>({
     async addProduct(context, task: () => Promise<AddProductResponse>){
       let data = await task();
     },
+
+    async updateUserPassword(context, task: () => Promise<void>) {
+      await task();
+    }
 
 
 
