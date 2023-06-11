@@ -31,6 +31,7 @@ export default defineComponent({
   overflow: hidden;
   max-width: 100%;
   min-height: 45vh;
+  height: fit-content;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

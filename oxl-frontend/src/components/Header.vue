@@ -73,7 +73,7 @@ export default defineComponent({
             return this.user ? this.user : null;
         },
 
-        ...mapGetters(["context"])
+        ...mapGetters(["context","currentUser"])
     },
     methods:{
         

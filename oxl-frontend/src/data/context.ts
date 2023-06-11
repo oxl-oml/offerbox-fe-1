@@ -13,7 +13,7 @@ export class Context {
     }
 
     /* State variables */
-    public currentUser?: User;
+    public currentUser: User | null = null;
     public currentJWT?: string;
 
     public isAdmin(): boolean{
