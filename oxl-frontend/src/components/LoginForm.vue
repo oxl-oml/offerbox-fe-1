@@ -1,5 +1,7 @@
 <template>
 
+    <AlertComponent v-if="alert" :alert="alert" /> 
+
   <form class="border-form-1 p-4 border-secondary">
     <h4>Podaj informacje o swoim koncie</h4>
     <div class="mb-3">
@@ -31,43 +33,55 @@
 <script lang="ts">
 import {HttpHandler} from '@/data/httpHandler';
 import {defineComponent, PropType, VueElement} from 'vue';
-import {LoginForm} from '@/data/entities'
+import {Alert, AlertTypes, DefaultErrorResponse, LoginForm, LoginResponse} from '@/data/entities'
 import {mapState, mapActions, mapMutations} from 'vuex';
 import router from '@/router';
+import AlertComponent from './AlertComponent.vue';
 
 export default defineComponent({
-  name: "LoginForm",
-  data() {
-    return {
-      showPassword: false,
-      loginForm: {
-        email: null,
-        password: null
-      }
-    }
-  },
-  methods: {
-
-    ...mapActions(["login"]),
-    ...mapMutations({
-      loginMutation: "loginUser",
-      addTemporaryEmailToUser: "addTemporaryEmailToUser"
-    }),
-
-
-    tryLogin() {
-      this.showPassword = false;
-      this.login(() => {
-        this.$emit("TryLogin");
-        this.addTemporaryEmailToUser(this.loginForm.email);
-        return new HttpHandler().login(this.loginForm)
-            .then((data) => {
-              this.loginMutation(data)
-              router.push({path: "/myprofile"})
-            })
-      })
-    }
-  }
+    name: "LoginForm",
+    data() {
+        var cAlert: any = null;
+        return {
+            showPassword: false,
+            loginForm: {
+                email: null,
+                password: null
+            },
+            alert: cAlert
+        };
+    },
+    methods: {
+        ...mapActions(["login"]),
+        ...mapMutations({
+            loginMutation: "loginUser",
+            addTemporaryEmail: "addTemporaryEmail"
+        }),
+        //To działa dobrze - nie dotykać bo przestanie
+        tryLogin() {
+            this.showPassword = false;
+            this.login(() => {
+                this.alert = new Alert(AlertTypes.INFORMATION, "Trying to log in...");
+                this.addTemporaryEmail(this.loginForm.email);
+                return new HttpHandler().login(this.loginForm)
+                    .then((data) => {
+                        console.log(data);
+                    //Sprawdz czy poprawnie zalogowano usera (Jezeli typ danych = LoginResponse to zalogowano poprawnie)
+                    if ((data as LoginResponse).tokenData) {
+                        this.loginMutation(data);
+                        router.push({ path: "/myprofile" });
+                    }
+                    else {
+                        this.alert = new Alert(AlertTypes.ERROR, (data as DefaultErrorResponse).details || "Nieznany błąd" )
+                    }
+                }).catch((error: any) => { 
+                    this.alert = (new Alert(AlertTypes.ERROR, error as string | "Nieznany błąd")); 
+                    
+                });
+            });
+        }
+    },
+    components: { AlertComponent }
 })
 
 
