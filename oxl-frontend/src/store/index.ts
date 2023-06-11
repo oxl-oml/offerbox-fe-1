@@ -34,19 +34,26 @@ export default createStore<StoreState>({
   },
   getters: {
     products(state, category?): Product[]{
+      try{
       if(category){
-        //console.log(state.selectedCategory);
         return state.products.filter( p => state.selectedCategory === 'All' || p.categoryName === state.selectedCategory )
       }
       return state.products;
+    }catch(e){
+      return [];
+    }
     },
 
     productsByCategory(state, x: string){
      
     },
 
-    productById(state) : Product{
-      return state.products[0];
+    productById(state) : Product | null {
+      try{
+        return state.products.find(p => p.dbaseId === (state.actualProductId as number)) as Product;
+      }catch(e){
+        return null;
+      }
     },
 
     productsByUser(state): Product[]{
