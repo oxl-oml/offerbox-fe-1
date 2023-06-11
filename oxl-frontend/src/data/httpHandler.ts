@@ -118,15 +118,15 @@ export class HttpHandler{
             "username": (`${registerData.firstName}_${registerData.lastName}_${Math.floor(Math.random()*99999)}`).toLowerCase(),
             "email": registerData.email,
             "phoneNumber": registerData.phone,
-            "profileImageSrc": "https://en.wikipedia.org/wiki/John_Doe#/media/File:John_and_Jane_Doe_Headstones.jpg",
+            "profileImageSrc": "",
             "password": secureLogin(registerData.password1)
         });
         console.log(tmp);
         return axios.post(urls.register, tmp, headers)
-        .then((response: {data: RegisterResponse | DefaultErrorResponse}) => { 
+        .then((response: {data: RegisterResponse }) => { 
             return response.data;
         }).catch((error: any) => {
-            console.log(error);
+            return error.response.data as DefaultErrorResponse;
         });
     }
 

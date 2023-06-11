@@ -2,7 +2,7 @@
 
     <AlertComponent v-if="alert" :alert="alert" /> 
 
-  <form class="border-form-1 p-4 border-secondary">
+  <form class="border-form-1 p-4 border-secondary" @submit.prevent="tryLogin()">
     <h4>Podaj informacje o swoim koncie</h4>
     <div class="mb-3">
       <label for="inputEmail" class="form-label">Adres e-mail</label>
@@ -24,7 +24,7 @@
 
     </div>
     <div class="mb-3 d-flex">
-      <input type="button" value="Zaloguj się" class="btn btn-secondary text-white" v-on:click="tryLogin()"/>
+      <input type="submit" value="Zaloguj się" class="btn btn-secondary text-white" />
     </div>
   </form>
 
