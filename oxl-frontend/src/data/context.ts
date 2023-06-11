@@ -6,17 +6,15 @@ export class Context {
     private constructor() {}
 
     public static getInstance(): Context{
-        if(!Context.instance){
+        if(!Context.instance) {
             Context.instance = new Context();
         }
         return Context.instance;
     }
 
-
     /* State variables */
     public currentUser?: User;
     public currentJWT?: string;
-    
 
     public isAdmin(): boolean{
         //return this.currentUser?.isAdmin() || false;
@@ -27,7 +25,5 @@ export class Context {
        // return this.currentUser?true:false;
        return true;
     }
-    
-
 
 }

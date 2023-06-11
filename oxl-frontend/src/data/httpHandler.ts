@@ -1,5 +1,18 @@
 //import { Axios } from "axios";
-import {Product, NewProductForm, User, Category, LoginResponse, RegistrationForm, RegisterResponse, DefaultErrorResponse, AddProductResponse, Alert, AlertTypes} from "./entities";
+import {
+    Product,
+    NewProductForm,
+    User,
+    Category,
+    LoginResponse,
+    RegistrationForm,
+    RegisterResponse,
+    DefaultErrorResponse,
+    AddProductResponse,
+    Alert,
+    AlertTypes,
+    PasswordChangeData
+} from "./entities";
 import  StoreState  from "@/store/index"; //TODO: Sprawnic, czy to nie jest zdrutowane
 import { useStore } from 'vuex';
 import { Context } from "./context";
@@ -45,6 +58,7 @@ const urls = {
     register: urlBuilder("register"),
     categories: urlBuilder("categories"),
     users: urlBuilder("users"),
+    changePassword: urlBuilder("users/password"),
     addProduct: urlBuilder("products")
 };
 
@@ -114,6 +128,18 @@ export class HttpHandler{
         }).catch((error: any) => {
             console.log(error);
         });
+    }
+
+    updatePassword(passwordChangeData: PasswordChangeData): Promise<void | DefaultErrorResponse> {
+        const headers = headerBuilder();
+        const data = JSON.stringify(passwordChangeData);
+
+        return axios.post(urls.changePassword, data, headers)
+            .then((response: { data: void }) => {
+                return response.data;
+            }).catch((error: any) => {
+                return error.response.data as DefaultErrorResponse;
+            });
     }
 
     addProduct(product: NewProductForm): Promise<AddProductResponse | DefaultErrorResponse>{
