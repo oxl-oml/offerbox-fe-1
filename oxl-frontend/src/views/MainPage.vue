@@ -64,11 +64,7 @@ export default defineComponent({
 
     },
     methods:{
-        // handleSelectedCategory(cName: string){
-        //     this.selectedCategory = cName;
-        //     console.log("Passed selected category" + cName);
-        // },
-
+ 
         ...mapMutations({
             handleSelectedCategory: "selectCategory"
         })

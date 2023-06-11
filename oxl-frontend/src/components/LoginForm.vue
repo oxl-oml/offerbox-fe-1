@@ -10,7 +10,7 @@
     <div class="mb-3">
       <label for="inputPassword" class="form-label">Hasło</label>
       <div class="input-group">
-        <input v-model="loginForm.password" v-bind:type="[showPassword ? 'text' : 'password']" class="form-control"
+        <input v-model="loginForm.password" v-bind:type="showPassword ? 'text' : 'password'" class="form-control"
                id="inputPassword"
                placeholder="********"/>
         <div class="input-group-append">

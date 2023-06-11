@@ -4,10 +4,10 @@
             <Header />
         </div>
     </div>
-    <div v-if="storedProduct.dbaseId" class="container-md justify-content-center my-4 bg-light rounded">
+    <div v-if="productById" class="container-md justify-content-center my-4 bg-light rounded">
         <div class="product-top-bar row p-3">
-            <h3>{{ storedProduct?.name }}</h3>
-            <h5>{{ `${storedProduct?.price} zł` }}</h5>
+            <h3>{{ productById?.name }}</h3>
+            <h5>{{ `${productById?.price} zł` }}</h5>
         </div>
         <div class="row product-gallery">
             <ImageSlider :images="storedProduct?.imageURL" class="col-md-8 d-flex justify-content-center align-items-center"/>
@@ -29,7 +29,6 @@
 
         
     </div>
-
 
 </template>
 
@@ -57,7 +56,8 @@ export default defineComponent({
         const store = useStore();
         const httpHandler = new HttpHandler();
         onMounted(()=> {
-           // store.dispatch("loadStoredProduct", httpHandler.loadStoredProduct)
+            //store.dispatch("loadStoredProduct", httpHandler.loadStoredProduct)
+            store.dispatch("loadProduct", httpHandler.loadProductById)
         })
 
         return {
@@ -67,15 +67,11 @@ export default defineComponent({
     computed:{
         ...mapGetters(["productById","products", "storedProduct"]),
 
-        productByIdHelper(){
-            return this.productById(this.productId);
-        }
         
-
     },
     methods:{
         ...mapMutations({
-            handleStoredProduct: "addStoredProduct",
+            //handleStoredProduct: "addStoredProduct",
             setActualProductId: "setActualProductId"
         }),
 
@@ -86,7 +82,7 @@ export default defineComponent({
         this.setActualProductId(this.productId);
     },
     beforeUnmount(){
-        this.setActualProductId(0);
+        //this.setActualProductId(0);
     }
     
 })
