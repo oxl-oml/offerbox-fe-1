@@ -8,18 +8,18 @@
         </div>
       </div>
   
-      <div class="col-sm-12 col-md-12 col-xl-10">
+      <div style="margin: 1px;" class="col-sm-12 col-md-12 col-xl-10">
         <AdminPanelUsers v-if="selected == 'Users'" />
       </div>
-      <div class="col-sm-12 col-md-12 col-xl-10">
+      <div style="margin: 1px;" class="col-sm-12 col-md-12 col-xl-10">
         <AdminPanelCategories v-if="selected == 'Categories'" />
       </div>
-      <div class="col-sm-12 col-md-12 col-xl-10">
+      <div style="margin: 1px;" class="col-sm-12 col-md-12 col-xl-10">
         <AdminPanelProducts v-if="selected == 'Products'" />
       </div>
   
       <div class="col-sm-12 col-md-12 col-xl-10 mt-4" v-if="selected == 'WebPages'">
-        <h5><i class="bi bi-globe-americas"></i> Strony WWW</h5>
+        <h5><i class="bi bi-globe-americas"></i> Zarządzanie stronami WWW</h5>
         <table class="table">
           <thead>
             <tr>
@@ -39,7 +39,7 @@
       </div>
   
       <div class="col-sm-12 col-md-12 col-xl-10 mt-4" v-if="selected == 'FTPAccounts'">
-        <h5> <i class="bi bi-hdd-rack-fill"></i> Konta FTP</h5>
+        <h5> <i class="bi bi-hdd-rack-fill"></i> Zarządzanie FTP</h5>
         <table class="table">
           <thead>
             <tr>
@@ -59,7 +59,7 @@
       </div>
   
       <div class="col-sm-12 col-md-12 col-xl-10 mt-4" v-if="selected == 'PostgresInfo'">
-        <h5> <i class="bi bi-database-fill-gear"></i> Informacje o Postgresie</h5>
+        <h5> <i class="bi bi-database-fill-gear"></i> Zarządzanie Postgresem</h5>
         <table class="table">
           <thead>
             <tr>
@@ -79,7 +79,7 @@
       </div>
   
       <div class="col-sm-12 col-md-12 col-xl-10 mt-4" v-if="selected == 'Certificates'">
-        <h5> <i class="bi bi-credit-card-2-front-fill"></i> Certyfikaty</h5>
+        <h5> <i class="bi bi-credit-card-2-front-fill"></i> Zarządzanie Certyfikat</h5>
         <table class="table">
           <thead>
             <tr>
@@ -116,15 +116,17 @@
   </template>
   
   <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, onMounted } from 'vue';
   import AdminPanelUsers from '../components/AdminPanels/AdminPanelUsers.vue';
   import AdminPanelCategories from '../components/AdminPanels/AdminPanelCategories.vue';
   import AdminPanelProducts from '../components/AdminPanels/AdminPanelProducts.vue';
+  import { HttpHandler } from '@/data/httpHandler';
   import { Context } from '@/data/context';
+  import store from '@/store';
   
   export default defineComponent({
     name: "AdminPanel",
-    components: { AdminPanelUsers, AdminPanelCategories, AdminPanelProducts },
+    components: { AdminPanelUsers, AdminPanelCategories, AdminPanelProducts},
     data() {
       let menuItems: Array<string> = ['Users', 'Categories', 'Products', 'WebPages', 'FTPAccounts', 'PostgresInfo', 'Certificates'];
       let selected: string = menuItems[0];
@@ -157,7 +159,7 @@
         this.selectedCertificate = certificate;
         this.certificateValidity = null;
         certificate.checkedDate = new Date().toLocaleString();
-      }
+      },
     }
   });
   </script>

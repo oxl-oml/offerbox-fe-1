@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import MainPage from '../views/MainPage.vue'
 import LoginPage from '../views/LoginPage.vue'
 import RegistrationPage from '../views/RegistrationPage.vue'
@@ -9,48 +9,21 @@ import FavPage from '@/views/FavPage.vue'
 import MessPage from '@/views/MessPage.vue'
 import { Context } from '@/data/context'
 import ProfilePage from '@/views/ProfilePage.vue'
-import { useStore } from 'vuex'
-import store from '../store/index'
-import { User } from '@/data/entities'
-import { isAdmin } from '@/data/scripts/helper'
-import { isLogged } from '@/data/scripts/helper'
 
-
-
+//props: (route) => ({alert: {}, ...route.params}
 const routes: Array<RouteRecordRaw> = [
-  { path: '/', component: MainPage, meta:{title: "Offerbox"}},
+  { path: '/', component: MainPage},
   { path: '/products', redirect: "/"},
+  { path: '/login', component: LoginPage},
   { path: '/login-force', redirect: '/login'},
+  { path: '/register', component: RegistrationPage},
   { path: '/products/:id', component: ProductPage},
   { path: '/products:pathMatch(.*)*', redirect: "/" },
-  { 
-    path: '/register', 
-    component: RegistrationPage,
-    beforeEnter(to, form, next){
-      
-      if(isLogged()){
-        next("/myprofile");
-      }
-      next();
-    }
-  },
-  { 
-    path: '/login', 
-    component: LoginPage,
-    beforeEnter(to, form, next){
-      
-      if(isLogged()){
-        next("/myprofile");
-      }
-      next();
-    }
-  },
   { 
     path: '/products/new', 
     component: AddProduct,
     beforeEnter(to, form, next){
-      
-      if(!isLogged()){
+      if(!Context.getInstance().isLogged()){
         next("/login-force");
       }
       next();
@@ -60,7 +33,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/favourites', 
     component: FavPage,
     beforeEnter(to, form, next){
-      if(!isLogged()){
+      if(!Context.getInstance().isLogged()){
         next("/login-force");
       }
       next();
@@ -70,7 +43,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/messages', 
     component: MessPage,
     beforeEnter(to, form, next){
-      if(!isLogged()){
+      if(!Context.getInstance().isLogged()){
         next("/login-force");
       }
       next();
@@ -79,8 +52,7 @@ const routes: Array<RouteRecordRaw> = [
   { 
     path: '/admin', component: AdminPage,
     beforeEnter(to, form, next){
-      if(!isAdmin()){
-        console.log("Nie Admin")
+      if(!Context.getInstance().isAdmin()){
         next("/");
       }
       next();
@@ -89,8 +61,8 @@ const routes: Array<RouteRecordRaw> = [
   { 
     path: '/myprofile', component: ProfilePage,
     beforeEnter(to, form, next){
-      if(!isLogged()){
-        next("/login-force");
+      if(!Context.getInstance().isLogged()){
+        next("/");
       }
       next();
     }
@@ -101,7 +73,7 @@ const routes: Array<RouteRecordRaw> = [
 
 
 const router = createRouter({
-  history: createWebHashHistory(process.env.BASE_URL),
+  history: createWebHistory(process.env.BASE_URL),
   routes
 })
 

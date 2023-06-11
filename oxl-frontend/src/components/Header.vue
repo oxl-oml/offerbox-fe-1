@@ -73,7 +73,7 @@ export default defineComponent({
             return this.user ? this.user : null;
         },
 
-        ...mapGetters(["context","currentUser"])
+        ...mapGetters(["context"])
     },
     methods:{
         
@@ -86,13 +86,14 @@ export default defineComponent({
 
 <style>
 .img-icons-white{
-    width: 35px;
-    height: 35px;
+    width: 28px;
+    height: 28px;
     fill: black;
 
 }
 .c-tooltip{
     position: relative;
+    transition: ease-in 200ms;
 }
 
 .c-tooltip:after{
@@ -107,8 +108,9 @@ export default defineComponent({
 }
 
 .c-tooltip:hover{
-    filter: invert(44%) sepia(87%) saturate(2151%) hue-rotate(163deg);
-    transition: all 0.2s ease;
+    filter: sepia(3) opacity(0.495);
+    fill: rgba(64, 63, 63, 0.915);
+    transition: ease-in 200ms;
 }
 
 

@@ -83,6 +83,7 @@ export default defineComponent({
 }
 
 .selected-category{
-    background-color: aqua !important;
+    background-color: #27292b !important;
+    color: white;
 }
 </style>
