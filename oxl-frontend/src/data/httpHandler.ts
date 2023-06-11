@@ -83,7 +83,7 @@ export class HttpHandler{
     }
 
     
-    login(loginData : any): Promise<LoginResponse>{
+    login(loginData : any): Promise<LoginResponse | DefaultErrorResponse>{
         const headers = headerBuilder();
         console.log(loginData.email);
         var tmp = JSON.stringify({
@@ -92,8 +92,8 @@ export class HttpHandler{
         });
         console.log(tmp);
         return axios.post(urls.login, tmp, headers)
-        .then((response: {data: LoginResponse | any; }) => { console.log(response.data); return response.data})
-        .catch((error: any) => console.log(error.response));
+        .then((response: {data: LoginResponse | DefaultErrorResponse; }) => { console.log(response.data); return response.data})
+        .catch((error: any) => {console.log(error.response); return error.response.data});
     }
 
     register(registerData: RegistrationForm): Promise<RegisterResponse | DefaultErrorResponse>{

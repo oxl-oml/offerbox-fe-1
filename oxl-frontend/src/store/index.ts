@@ -12,7 +12,8 @@ export interface StoreState {
   context: Context,       //store user data like JWT
   storedProduct?: Product, //store product in /product/id page
   actualProductId?: number,//store id catched from url
-  actualAlert?: Alert
+  actualAlert?: Alert,
+  temporaryEmail?:string
   
   //admin
   users: User[],
@@ -30,15 +31,16 @@ export default createStore<StoreState>({
     storedProduct: new Product("", "", "", 0, 0, 0, 0, []),
     users: [],
     selectedAdminOption: "",
+    
 
   },
   getters: {
     products(state, category?): Product[]{
       try{
-      if(category){
-        return state.products.filter( p => state.selectedCategory === 'All' || p.categoryName === state.selectedCategory )
-      }
-      return state.products;
+        if(category){
+          return state.products.filter( p => state.selectedCategory === 'All' || p.categoryName === state.selectedCategory )
+        }
+        return state.products;
     }catch(e){
       return [];
     }
@@ -134,8 +136,8 @@ export default createStore<StoreState>({
       }
     },
 
-    addTemporaryEmailToUser(currentState: StoreState, email: string){
-      currentState.context.currentUser = new User(0, "", email, "", "", "", "", "", "");
+    addTemporaryEmail(currentState: StoreState, email: string){
+      currentState.temporaryEmail = email;
     },
 
     addUsers(currentState: StoreState, users: User[]){
