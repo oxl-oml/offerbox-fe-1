@@ -15,7 +15,7 @@
 
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, Prop } from 'vue';
 import { PropType } from 'vue';
 import { User } from '@/data/entities';
 
@@ -26,6 +26,9 @@ export default defineComponent({
         sellerDetails:{
             type: Object as PropType<User>,
             //required: true
+        },
+        sellerId:{
+            type: Object as PropType<number>
         }
     }
 })

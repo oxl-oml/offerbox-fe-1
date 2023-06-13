@@ -96,6 +96,13 @@ export class HttpHandler{
         return axios.get(urls.users, headers).then((response: {data: User[]}) => response.data).catch(() => console.log());
     }
 
+    loadUserById() : Promise<User | DefaultErrorResponse>{
+        const headers = headerBuilder();
+        return axios.get(urls.users, headers)
+        .then((response: {data: User[]}) => response.data)
+        .catch( (error: any) => {return error.response.data as DefaultErrorResponse});
+    }
+
     
     login(loginData : any): Promise<LoginResponse | DefaultErrorResponse>{
         const headers = headerBuilder();
@@ -118,7 +125,7 @@ export class HttpHandler{
             "username": (`${registerData.firstName}_${registerData.lastName}_${Math.floor(Math.random()*99999)}`).toLowerCase(),
             "email": registerData.email,
             "phoneNumber": registerData.phone,
-            "profileImageSrc": "",
+            "profileImageSrc": "https://i1.sndcdn.com/avatars-000618273024-j84woe-t500x500.jpg",
             "password": secureLogin(registerData.password1)
         });
         console.log(tmp);
