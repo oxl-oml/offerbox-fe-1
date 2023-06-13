@@ -108,6 +108,7 @@
                 <input type="submit" value="Zmień hasło"
                        class="btn btn-secondary text-white"/>
               </div>
+              
               <div v-if="error" class="bad-data">
                 <p>
                   <i class="bi bi-exclamation-circle"></i>

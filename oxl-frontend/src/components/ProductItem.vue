@@ -19,9 +19,11 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { Product } from '@/data/entities';
+import Footer from '@/components/Footer.vue';
 
 export default defineComponent({
     name: "ProductItem",
+    components: {Footer},
     data(){
         return{
             isImageLoaded: false,

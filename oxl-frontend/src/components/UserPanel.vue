@@ -13,6 +13,9 @@
                 <div class="col-sm-12 col-md-12 col-xl-10">
                     <UserPanelMyAccount v-if="selected == menuItems[0]" />
                     <UserPanelMyProducts v-else-if="selected == menuItems[1]" />
+                    <UserPanelMyFavourite v-else-if="selected == menuItems[2]" />
+                    <AdminPanel v-else-if="selected === menuItems[3]" />
+                    <!-- <AdminPanel v-else-if="selected === menuItems[3] && context.userData.isAdmin()" />  jak?!!?!??? -->
                 </div>
     </div>
 
@@ -25,16 +28,17 @@ import AdminPanelUsers from '../components/AdminPanels/AdminPanelUsers.vue';
 import UserPanelMyAccount from '@/components/UserPanels/UserPanelMyAccount.vue'
 import { Context } from '@/data/context';
 import { User } from '@/data/entities';
-import { mapMutations } from 'vuex';
+import { mapGetters, mapState, mapMutations } from 'vuex';
 import router from '@/router';
 import UserPanelMyProducts from './UserPanels/UserPanelMyProducts.vue';
+import AdminPanel from './AdminPanel.vue';
 
 
 export default defineComponent({
     name: "UserPanel",
-    components: { AdminPanelUsers, UserPanelMyAccount, UserPanelMyProducts },
+    components: { UserPanelMyAccount, UserPanelMyProducts, AdminPanel },
     data() {
-        let menuItems : Array<string> = ['Moje konto', 'Moje produkty', 'Moje ulubione', 'Wyloguj'];
+        let menuItems : Array<string> = ['Moje konto', 'Moje produkty', 'Moje ulubione', 'Panel administracyjny','Wyloguj'];
         let selected: string = menuItems[0];
         return {menuItems, selected};
    },
@@ -61,10 +65,9 @@ export default defineComponent({
       userData(): User{
         var loggedUser: User = JSON.parse(localStorage.getItem("User") as string);
         return loggedUser;
-      }
+      },
+      ...mapGetters(["context"])
     },
-
-
 });
 
 </script>

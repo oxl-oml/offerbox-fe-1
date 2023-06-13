@@ -30,8 +30,8 @@ export default defineComponent({
 <style>
 
 .alert-error{
-    background-color: plum !important;
-    
+    /* background-color: plum !important; */
+    background-color: rgba(226, 11, 11, 0.845) !important;
 }
 
 .alert{

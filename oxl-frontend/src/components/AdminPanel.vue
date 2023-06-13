@@ -79,7 +79,7 @@
       </div>
   
       <div class="col-sm-12 col-md-12 col-xl-10 mt-4" v-if="selected == 'Certificates'">
-        <h5> <i class="bi bi-credit-card-2-front-fill"></i> Zarządzanie Certyfikat</h5>
+        <h5> <i class="bi bi-credit-card-2-front-fill"></i> Zarządzanie Certyfikatami</h5>
         <table class="table">
           <thead>
             <tr>
@@ -123,10 +123,11 @@
   import { HttpHandler } from '@/data/httpHandler';
   import { Context } from '@/data/context';
   import store from '@/store';
+  import Footer from '@/components/Footer.vue';
   
   export default defineComponent({
     name: "AdminPanel",
-    components: { AdminPanelUsers, AdminPanelCategories, AdminPanelProducts},
+    components: { AdminPanelUsers, AdminPanelCategories, AdminPanelProducts, Footer},
     data() {
       let menuItems: Array<string> = ['Users', 'Categories', 'Products', 'WebPages', 'FTPAccounts', 'PostgresInfo', 'Certificates'];
       let selected: string = menuItems[0];
