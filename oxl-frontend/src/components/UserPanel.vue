@@ -43,7 +43,7 @@
       return {
         menuItems: ['Moje konto', 'Moje produkty', 'Moje ulubione', 'Panel administracyjny', 'Wyloguj'],
         selected: 'Moje konto',
-        alert: null,
+        alert: null as Alert | null,
         showAlert: false
       };
     },

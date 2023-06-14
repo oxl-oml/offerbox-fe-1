@@ -43,7 +43,7 @@
   .alert-error {
     /* background-color: plum !important; */
     background-color: rgba(226, 11, 11, 0.845) !important;
-    animation: fadeOut 3s forwards;
+    animation: fadeOut 5s forwards;
     color: white;
   }
   
