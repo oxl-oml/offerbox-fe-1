@@ -30,6 +30,7 @@
         
     </div>
 
+    <Footer />
 </template>
 
 
@@ -43,6 +44,8 @@ import { mapActions, mapGetters, mapMutations, mapState } from 'vuex';
 import { StoreState } from '@/store';
 import { useStore } from 'vuex';
 import ImageSlider from '@/components/ImageSlider.vue';
+import Footer from '@/components/Footer.vue';
+
 
 //import { Carousel, Slide } from 'vue-carousel';
 
@@ -51,7 +54,7 @@ export default defineComponent({
     setup(){
         return {store: useStore()};
     },
-    components: { Header, ImageSlider },
+    components: { Header, ImageSlider, Footer },
     data(){
         const store = useStore();
         const httpHandler = new HttpHandler();

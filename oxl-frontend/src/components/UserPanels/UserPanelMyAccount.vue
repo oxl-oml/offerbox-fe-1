@@ -108,6 +108,7 @@
                 <input type="submit" value="Zmień hasło"
                        class="btn btn-secondary text-white"/>
               </div>
+              
               <div v-if="error" class="bad-data">
                 <p>
                   <i class="bi bi-exclamation-circle"></i>
@@ -131,7 +132,7 @@
                    class="form-control"
                    placeholder="Wprowadź URL zdjęcia">
             <h5 class="my-3">{{ context.currentUser.firstName }} {{ context.currentUser.lastName }}</h5>
-            <p class="text-muted mb-1">Rola: {{ context.currentUser.isAdmin ? "Administrator" : "Użytkownik" }}</p>
+            <p class="text-muted mb-1">Rola: {{ context.currentUser.role === "ADM" || context.currentUser.role === "SADM" ? "Administrator" : "Użytkownik" }}</p>
           </div>
         </div>
       </div>

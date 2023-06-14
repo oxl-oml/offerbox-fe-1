@@ -13,10 +13,11 @@ import { Product } from '@/data/entities';
 import { useStore } from 'vuex';
 import { mapMutations, mapState, mapGetters } from 'vuex';
 import { StoreState } from '@/store';
+import Footer from '@/components/Footer.vue';
 
 export default defineComponent({
     name: "ProductList",
-    components: {ProductItem},
+    components: {ProductItem, Footer},
     computed: {
         ...mapState<StoreState>({
             selectedCategory: (state: StoreState) => state.selectedCategory,
