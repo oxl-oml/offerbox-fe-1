@@ -21,9 +21,6 @@
         </div>
     </div>
     <AlertComponent v-if="showAlert && alert" class="col-sm-12 col-md-12 col-lg-12 mt-4 text-center" :alert="alert" />
-      
-
-    <Footer />
 
   </template>
   

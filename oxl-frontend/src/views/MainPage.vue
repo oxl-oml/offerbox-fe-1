@@ -155,7 +155,7 @@ export default defineComponent({
 
 .progress-bar div {
   height: 100%;
-  background-color: black;
+  background-color: #1f2122;
   width: 0;
   transition: width 0.99s ease;
 }
@@ -174,7 +174,7 @@ export default defineComponent({
   position: fixed;
   bottom: 16px;
   right: 16px;
-  background-color: black;
+  background-color: #1f2122;
   color: #fff;
   cursor: pointer;
   border-radius: 10%;

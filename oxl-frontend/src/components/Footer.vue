@@ -55,7 +55,7 @@
   
   <style scoped>
   .footer {
-    background-color: #000000;
+    background-color: #1f2122;
     padding-top: 70px;
     padding-bottom: 40px;
     color: white;

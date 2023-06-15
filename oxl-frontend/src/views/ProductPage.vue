@@ -26,8 +26,6 @@
         <div class="product-owner col-sm-12 col-md-4 p-4">
             <h5>Informacje o sprzedającym</h5>
             <p>{{ productById?.ownerId }}</p>
-            <p>{{ productsByUser?.username }}</p>
-            <p>{{ productsByUser?.phoneNumber }}</p>
         </div>
     </div>
 </div>
