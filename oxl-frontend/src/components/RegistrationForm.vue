@@ -93,26 +93,37 @@ export default defineComponent({
       setActualAlert: "setActualAlert",
     }),
 
+    checkPasswordsMatching(): boolean{
+      if(this.registerData.password1 != this.registerData.password2){
+        return false;
+      }
+      return true;
+    },
+
     tryRegister() {
       console.log("Register button clicked");
-      //this.$emit("TryRegister");
+      
+      if(!this.checkPasswordsMatching()){
+        this.setActualAlert(new Alert(AlertTypes.WARNING, "Paswords doesn't match!"))
+        return;
+      }
+
       this.register(() => {
         return new HttpHandler().register(this.registerData)
             .then((data: RegisterResponse | DefaultErrorResponse) => {
-              var alert: Alert = ((data as RegisterResponse).id) ? (new Alert(AlertTypes.INFORMATION, "Konto zostało utworzone.")) : (new Alert(AlertTypes.ERROR, (data as DefaultErrorResponse).details as string | "Nieznany błąd"))
-              this.setActualAlert(alert);
 
-              if ((data as RegisterResponse).id) {
-                console.log("Data as register response");
+              var alert = null;
+
+              if((data as RegisterResponse).id){
+                alert = new Alert(AlertTypes.INFORMATION, "Konto zostało utworzone.");
                 this.$router.push({path: "/login"});
               }
-              if ((data as DefaultErrorResponse).details) {
-                console.log("Data as register error response");
-                //this.$emit("TryRegister");
+              else{
+                var details: string = (data as DefaultErrorResponse).details || (data as DefaultErrorResponse).message || "Nieznany bład";
+                alert = new Alert(AlertTypes.ERROR, details);
               }
-
-              console.log(data);
-
+              this.setActualAlert(alert);
+              
             })
             .catch((error: any) => {
               this.setActualAlert(new Alert(AlertTypes.ERROR, error as string | "Nieznany błąd"))

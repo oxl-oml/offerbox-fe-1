@@ -41,7 +41,7 @@
     components: { UserPanelMyAccount, UserPanelMyProducts, AdminPanel },
     data() {
       return {
-        menuItems: ['Moje konto', 'Moje produkty', 'Moje ulubione', 'Panel administracyjny', 'Wyloguj'],
+        menuItems: ['Moje konto', 'Moje produkty', 'Moje ulubione', 'Wyloguj'],
         selected: 'Moje konto',
         alert: null as Alert | null,
         showAlert: false
