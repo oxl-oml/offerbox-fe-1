@@ -11,7 +11,7 @@
             <h5>{{ `${productById?.price} zł` }}</h5>
         </div>
         <div class="col-md-4 d-flex align-items-center justify-content-end">
-            <img :src="testowe" alt="User avatar"
+            <img src="null" alt="User avatar"
                 class="rounded-circle img-fluid object-fit-cover" style="width: 64px; height: 64px;"/>
         </div>
     </div>

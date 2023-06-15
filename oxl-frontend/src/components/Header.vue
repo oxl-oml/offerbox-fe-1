@@ -5,7 +5,7 @@
         <div class="lef-side-header">
             <RouterLink to="/">
                 <div id="image-place">
-                    <img src="../assets/logo/l1_low.png" width="50" class="img-thumbnail"/>
+                    <img src="../assets/logo/logo3.png" width="150" class="img"/>
                 </div>
             </RouterLink>
         </div>

@@ -11,19 +11,19 @@
 
     <div id="main-element" class="container-fluid h-100 d-inline-block">
       <div class="row bg-primary sticky-top p-2 text-light">
-        <Header/>
+        <Header />
       </div>
 
-      <div class="row flex-nowrap">
-        <div class="col-auto col-md-2 bg-light d-flex flex-column align-items-center">
-          <CategoryList
+      <div class="row">
+        <div class="col-sm-12 col-md-3 col-xl-2 bg-light d-flex flex-column align-items-center">
+          <CategoryList :class="{'cat-custom-mobile' : (deviceWidth <= 540), 'cat-custom-standard': (deviceWidth > 540) }"
               :selectedCategory="selectedCategory"
               :categories="categories"
               @selectCategory="handleSelectedCategory"
           />
         </div>
 
-        <div class="col-md-10">
+        <div class="col-sm-12 col-md-9 col-xl-10">
           <ProductList v-if="!loading"/>
         </div>
       </div>
@@ -36,7 +36,7 @@
             <Footer />
 </template>
 
-<script>
+<script lang="ts">
 import Header from '@/components/Header.vue';
 import ProductList from '@/components/ProductList.vue';
 import CategoryList from '@/components/CategoryList.vue';
@@ -77,7 +77,7 @@ export default defineComponent({
     const categories = computed(() => store.state.categories);
     const selectedCategory = computed(() => store.state.selectedCategory);
 
-    const handleSelectedCategory = (cName) => {
+    const handleSelectedCategory = (cName: string) => {
       store.commit('selectCategory', cName);
     };
 
@@ -102,10 +102,26 @@ export default defineComponent({
       scrollToTop,
     };
   },
+  computed:{
+    deviceWidth():number{
+      return window.innerWidth;
+    }
+  }
 });
 </script>
 
 <style>
+
+.cat-custom-mobile{
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.cat-custom-normal{
+  max-height: 1000px ;
+
+}
+
 #main-element {
   user-select: none;
 }
