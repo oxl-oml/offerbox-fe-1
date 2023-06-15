@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import {User, Product, Category, LoginResponse, Alert, DefaultErrorResponse, AddProductResponse} from '@/data/entities'
 import { Context } from '@/data/context';
+import { isArray } from '@vue/shared';
 
 
 
@@ -95,6 +96,10 @@ export default createStore<StoreState>({
     //for admin
     users(state){
       return state.users;
+    },
+
+    userById(state): User{
+      return state.users[0];
     }
 
   },
@@ -178,6 +183,9 @@ export default createStore<StoreState>({
     async loadUsers(context, task: () => Promise<User[]>){
       let data = await task();
       context.commit("addUsers", data);
+    },
+    async loadUserById(context, task: () => Promise<User>){
+      context.commit("addUsers", await task())
     },
     async loadCategories(context, task: () => Promise<Category[]>){
       let data = await task();

@@ -22,16 +22,26 @@
 <script lang="ts">
 
 import Header from '@/components/Header.vue';
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, onMounted, PropType } from 'vue';
 import LoginForm from '@/components/LoginForm.vue';
 import {Alert} from '@/data/entities'
 import LoginInProgress from '@/components/LoginInProgress.vue';
 import router from '@/router';
-import { mapGetters } from 'vuex';
+import { mapGetters, useStore } from 'vuex';
 import AlertComponent from '@/components/AlertComponent.vue';
+import { HttpHandler } from '@/data/httpHandler';
 
 export default defineComponent({
     name: "LoginPage",
+    setup(){
+        const httpHandler: HttpHandler = new HttpHandler();
+        const store = useStore();
+
+        onMounted(() =>{
+            store.dispatch("addUsers", httpHandler.loadUserById);
+        })
+
+    },
     data(){
         return {
             isShowingProgress: false
