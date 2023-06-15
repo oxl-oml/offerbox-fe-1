@@ -65,13 +65,17 @@ export default defineComponent({
         const httpHandler = new HttpHandler();
 
         httpHandler.loadReports()
-        .then((response) => {
-          console.log("Raport", response);
-          
+        .then((response: ArrayBuffer) => {
+          const blob = new Blob([response], { type: 'application/pdf' })
+          let link = document.createElement('a');
+          link.href = window.URL.createObjectURL(blob);
+          link.target = "_blank";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
         })
         .catch((err) => {
           console.log("Error podczas pobierania raporrtu", err);
-          
         });
       },
     }

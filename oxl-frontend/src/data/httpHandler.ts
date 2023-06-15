@@ -1,25 +1,19 @@
-//import { Axios } from "axios";
 import {
-    Product,
-    NewProductForm,
-    User,
-    Category,
-    LoginResponse,
-    RegistrationForm,
-    RegisterResponse,
-    DefaultErrorResponse,
     AddProductResponse,
-    Alert,
-    AlertTypes,
-    PasswordChangeData
+    Category,
+    DefaultErrorResponse,
+    LoginResponse,
+    NewProductForm,
+    PasswordChangeData,
+    Product,
+    RegisterResponse,
+    RegistrationForm,
+    User
 } from "./entities";
-import  StoreState  from "@/store/index"; //TODO: Sprawnic, czy to nie jest zdrutowane
-import { useStore } from 'vuex';
-import { Context } from "./context";
+import {useStore} from 'vuex';
 import secureLogin from "@/data/scripts/secureLogin"
-import router from "@/router";
-import LoginPage from "@/views/LoginPage.vue"
-import { Axios } from "axios";
+
+const axios = require('axios');
 
 //connection
 const protocol = "https";
@@ -29,26 +23,21 @@ const port = 443;
 //other
 const store = useStore();
 
-
-
 function urlBuilder(x: string): string {
     return `${protocol}://${hostname}:${port}/api/${x}`
 }
 
 function headerBuilder(){
-    var JWT = localStorage.getItem("JWT"); //TODO: To dotyczy tego wyzej i tez moze byc zdrutowane ale dziala wiec ye*ac
-    if(!JWT){
-        console.log("JWT token not provided");
-    }
-    var header = {
+    return {
         headers: {
-            "Authorization": `Bearer ${JWT}`,
-            "Content-Type": `application/json`, 
+            "Authorization": getJwtAuthHeaderValue(),
+            "Content-Type": `application/json`,
         }
     };
-    console.log(header);
+}
 
-    return header;
+function getJwtAuthHeaderValue(): string {
+    return `Bearer ${localStorage.getItem("JWT")}`
 }
 
 const urls = {
@@ -59,12 +48,10 @@ const urls = {
     register: urlBuilder("register"),
     categories: urlBuilder("categories"),
     users: urlBuilder("users"),
-    allUsersReport: urlBuilder("users/report"),
+    allUsersReport: urlBuilder("users/admin/report"),
     changePassword: urlBuilder("users/password"),
     addProduct: urlBuilder("products")
 };
-
-const axios = require('axios');
 
 export class HttpHandler{
 
@@ -106,16 +93,18 @@ export class HttpHandler{
         .catch( (error: any) => {return error.response.data as DefaultErrorResponse});
 
     }
-
-    loadReports() : Promise<Blob>{
-        const headers = headerBuilder();
-        return axios.get(urls.allUsersReport, headers)
-        .then((response: { data: Blob; }) => response.data)
+    
+    loadReports() : Promise<ArrayBuffer>{
+        return axios.get(urls.allUsersReport, {
+            headers: {
+                Authorization: getJwtAuthHeaderValue()
+            },
+            responseType: "blob"
+        })
+        .then((response: { data: ArrayBuffer; }) => response.data)
         .catch(() => console.log());
- 
     }
 
-    
     login(loginData : any): Promise<LoginResponse | DefaultErrorResponse>{
         const headers = headerBuilder();
         console.log(loginData.email);
