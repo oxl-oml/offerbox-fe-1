@@ -47,7 +47,7 @@
     methods: {
       handleScroll() {
         const scrollPercentage = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-        this.showFooter = scrollPercentage >= 85;
+        this.showFooter = scrollPercentage >= 35;
       },
     },
   });

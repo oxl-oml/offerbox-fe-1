@@ -1,5 +1,5 @@
 <template>
-   <h5> <i class="bi bi-person-fill-exclamation"></i> Zarządzanie Użytkownikami</h5>
+<h5> <i class="bi bi-person-fill-exclamation"></i> Zarządzanie Użytkownikami</h5>
     <table class="interactive-table" v-if="users[0]">
 
         <tr>
@@ -22,7 +22,6 @@
         </tr>
         <button style="margin: 5px; font-size: small;" class="btn btn-primary" @click="downloadReport()">Wygeneruj raport</button>
     </table>
-   
 
 </template>
 
@@ -82,27 +81,22 @@ export default defineComponent({
 </script>
 
 <style>
-.interactive-table{
-    overflow: scroll;
-    position: relative;
-    left: 0;
-    right: 0;
-    font-size: small;
+.interactive-table {
+  font-size: small;
 }
 
-.interactive-table th, td{
-    border-collapse: collapse;
-    border: 2px solid grey;
-    padding: 4px;
-    
+.interactive-table th,
+.interactive-table td {
+  border-collapse: collapse;
+  border: 2px solid grey;
+  padding: 4px;
 }
 
-.interactive-table td{
-    max-width: 600px
+.interactive-table td {
+  max-width: 600px;
 }
 
-.interactive-table tr:nth-child(2n){
-    background-color:gainsboro;
+.interactive-table tr:nth-child(2n) {
+  background-color: gainsboro;
 }
-
 </style>

@@ -3,7 +3,7 @@
         <div class="row bg-primary sticky-top p-2 text-light">
             <Header />
         </div>
-
+        
         <div v-if="actualAlert" class="row align-items-center justify-content-center">
             <AlertComponent :alert="actualAlert" />
         </div>
