@@ -81,7 +81,8 @@ export default defineComponent({
             });
         }
     },
-    components: { AlertComponent }
+    components: { AlertComponent },
+    
 })
 
 

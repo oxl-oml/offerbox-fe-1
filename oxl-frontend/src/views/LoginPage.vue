@@ -27,7 +27,7 @@ import LoginForm from '@/components/LoginForm.vue';
 import {Alert} from '@/data/entities'
 import LoginInProgress from '@/components/LoginInProgress.vue';
 import router from '@/router';
-import { mapGetters, useStore } from 'vuex';
+import { mapGetters, mapMutations, useStore } from 'vuex';
 import AlertComponent from '@/components/AlertComponent.vue';
 import { HttpHandler } from '@/data/httpHandler';
 
@@ -52,11 +52,19 @@ export default defineComponent({
         handleLoginData(form: typeof LoginForm){
             console.log("here" + form.email)
             
-        }
+        },
+
+        ...mapMutations({
+           setActualAlert:"setActualAlert"
+        })
+
     },
     computed:{
         ...mapGetters(["actualAlert"])
-    }
+    },
+    mounted(){
+        this.setActualAlert(null);
+  }
 
 });
 

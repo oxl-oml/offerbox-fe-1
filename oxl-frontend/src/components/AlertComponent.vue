@@ -3,7 +3,10 @@
       <div
         style="color: white;"
         class="p-3 alert"
-        :class="{'alert-error': (alert.alertType === alertTypes.ERROR)}"
+        :class="{'alert-error': (alert.alertType === alertTypes.ERROR), 
+        'alert-information': (alert.alertType === alertTypes.INFORMATION),
+        'alert-warning': (alert.alertType === alertTypes.WARNING),
+        }"
       >
         {{ alert.message }}
       </div>
@@ -41,8 +44,17 @@
   
   <style>
   .alert-error {
-    /* background-color: plum !important; */
     background-color: rgba(226, 11, 11, 0.845) !important;
+    animation: fadeOut 5s forwards;
+    color: white;
+  }
+  .alert-information {
+    background-color: gold !important;
+    animation: fadeOut 5s forwards;
+    color: white;
+  }
+  .alert-warning {
+    background-color: orange !important;
     animation: fadeOut 5s forwards;
     color: white;
   }
@@ -52,7 +64,7 @@
       opacity: 1;
     }
     to {
-      opacity: 0;
+      opacity: 1;
     }
   }
   
@@ -62,7 +74,8 @@
   
   .alert {
     border-radius: 10px;
-    border: 1px solid black;
+    border: 2px solid black;
+    font-size: larger;
   }
   </style>
   

@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex flex-column justify-content-start align-items-start p-3">
         <div class="">
-            Imię Nazwisko
+            Imię Nazwisko {{ userById }}
         </div>
         <div>
             Wystawionych przedmiotów:
@@ -18,6 +18,7 @@
 import { defineComponent, Prop } from 'vue';
 import { PropType } from 'vue';
 import { User } from '@/data/entities';
+import { mapGetters } from 'vuex';
 
 
 export default defineComponent({
@@ -30,6 +31,9 @@ export default defineComponent({
         sellerId:{
             type: Object as PropType<number>
         }
+    },
+    computed:{
+        ...mapGetters(["userById"])
     }
 })
 

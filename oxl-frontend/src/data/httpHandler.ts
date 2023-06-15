@@ -114,8 +114,8 @@ export class HttpHandler{
         });
         console.log(tmp);
         return axios.post(urls.login, tmp, headers)
-        .then((response: {data: LoginResponse | DefaultErrorResponse; }) => { console.log(response.data); return response.data})
-        .catch((error: any) => {console.log(error.response); return error.response.data});
+        .then((response: {data: LoginResponse | DefaultErrorResponse; }) => { return response.data})
+        .catch((error: any) => {return error.response.data as DefaultErrorResponse});
     }
 
     register(registerData: RegistrationForm): Promise<RegisterResponse | DefaultErrorResponse>{
@@ -129,12 +129,11 @@ export class HttpHandler{
             "profileImageSrc": "https://i1.sndcdn.com/avatars-000618273024-j84woe-t500x500.jpg",
             "password": secureLogin(registerData.password1)
         });
-        console.log(tmp);
         return axios.post(urls.register, tmp, headers)
         .then((response: {data: RegisterResponse | DefaultErrorResponse}) => { 
             return response.data;
         }).catch((error: any) => {
-            console.log(error);
+            return error.response.data as DefaultErrorResponse;
         });
     }
 

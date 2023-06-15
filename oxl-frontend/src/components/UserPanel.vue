@@ -20,11 +20,11 @@
             </div>
         </div>
     </div>
-    <div v-if="showAlert" class="col-sm-12 col-md-12 col-lg-12 mt-4 text-center">
-      <div style="color: white; background-color: rgba(226, 11, 11, 0.845) !important" class="p-3 alert alert-error">
-        {{ alert.message }}
-      </div>
-    </div>
+    <AlertComponent v-if="showAlert && alert" class="col-sm-12 col-md-12 col-lg-12 mt-4 text-center" :alert="alert" />
+      
+
+    <Footer />
+
   </template>
   
   <script lang="ts">
@@ -35,13 +35,15 @@
   import router from '@/router';
   import UserPanelMyProducts from './UserPanels/UserPanelMyProducts.vue';
   import AdminPanel from './AdminPanel.vue';
+  import Footer from './Footer.vue';
+import AlertComponent from './AlertComponent.vue';
   
   export default defineComponent({
     name: "UserPanel",
-    components: { UserPanelMyAccount, UserPanelMyProducts, AdminPanel },
+    components: { UserPanelMyAccount, UserPanelMyProducts, AdminPanel, AlertComponent, Footer },
     data() {
       return {
-        menuItems: ['Moje konto', 'Moje produkty', 'Moje ulubione', 'Panel administracyjny', 'Wyloguj'],
+        menuItems: ['Moje konto', 'Moje produkty', 'Moje ulubione', 'Wyloguj'],
         selected: 'Moje konto',
         alert: null as Alert | null,
         showAlert: false
