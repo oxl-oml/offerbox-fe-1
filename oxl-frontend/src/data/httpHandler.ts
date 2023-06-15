@@ -105,6 +105,8 @@ export class HttpHandler{
         .then((response: {data: User[]}) => response.data)
         .catch( (error: any) => {return error.response.data as DefaultErrorResponse});
 
+    }
+    
     loadReports() : Promise<Blob>{
         const headers = headerBuilder();
         return axios.get(urls.allUsersReport, headers)
