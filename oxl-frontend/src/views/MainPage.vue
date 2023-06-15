@@ -57,6 +57,7 @@ export default defineComponent({
     const showScrollButton = computed(() => scrollPosition.value > window.innerHeight * 0.8);
 
     onMounted(() => {
+      document.title = "Offerbox";
       const timer = setInterval(() => {
         if (progress.value < 100) {
           progress.value += 46;

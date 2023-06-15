@@ -19,7 +19,7 @@ import { isLogged } from '@/data/scripts/helper'
 
 const routes: Array<RouteRecordRaw> = [
   { path: '/', component: MainPage, meta:{title: "Offerbox"}},
-  { path: '/products', redirect: "/"},
+  { path: '/products', redirect: "/", meta:{title: "Offerbox"}},
   { path: '/login-force', redirect: '/login'},
   { path: '/products/:id', component: ProductPage},
   { path: '/products:pathMatch(.*)*', redirect: "/" },
