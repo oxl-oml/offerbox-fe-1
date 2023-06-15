@@ -22,6 +22,9 @@
     </div>
     <AlertComponent v-if="showAlert && alert" class="col-sm-12 col-md-12 col-lg-12 mt-4 text-center" :alert="alert" />
       
+
+    <Footer />
+
   </template>
   
   <script lang="ts">
@@ -32,11 +35,12 @@
   import router from '@/router';
   import UserPanelMyProducts from './UserPanels/UserPanelMyProducts.vue';
   import AdminPanel from './AdminPanel.vue';
+  import Footer from './Footer.vue';
 import AlertComponent from './AlertComponent.vue';
   
   export default defineComponent({
     name: "UserPanel",
-    components: { UserPanelMyAccount, UserPanelMyProducts, AdminPanel, AlertComponent },
+    components: { UserPanelMyAccount, UserPanelMyProducts, AdminPanel, AlertComponent, Footer },
     data() {
       return {
         menuItems: ['Moje konto', 'Moje produkty', 'Moje ulubione', 'Wyloguj'],
