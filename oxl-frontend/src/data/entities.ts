@@ -129,7 +129,7 @@ export class User {
     ){}
 
     public isAdmin(): boolean {
-        return this.role === "ADM" || this.role === "ADM";
+        return this.role === "ADM" || this.role === "SADM";
     }
 
 }

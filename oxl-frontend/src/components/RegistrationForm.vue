@@ -99,20 +99,23 @@ export default defineComponent({
       this.register(() => {
         return new HttpHandler().register(this.registerData)
             .then((data: RegisterResponse | DefaultErrorResponse) => {
-              console.log(data);
-            
-              if((data as RegisterResponse).id){
-                this.setActualAlert(new Alert(AlertTypes.INFORMATION, "Konto zostało utworzone."));
+              var alert: Alert = ((data as RegisterResponse).id) ? (new Alert(AlertTypes.INFORMATION, "Konto zostało utworzone.")) : (new Alert(AlertTypes.ERROR, (data as DefaultErrorResponse).details as string | "Nieznany błąd"))
+              this.setActualAlert(alert);
+
+              if ((data as RegisterResponse).id) {
+                console.log("Data as register response");
                 this.$router.push({path: "/login"});
               }
-              else if((data as DefaultErrorResponse).message){
-                this.setActualAlert(new Alert(AlertTypes.ERROR,  (data as DefaultErrorResponse).details || "Nieznany błąd"));
+              if ((data as DefaultErrorResponse).details) {
+                console.log("Data as register error response");
+                //this.$emit("TryRegister");
               }
-            
+
+              console.log(data);
+
             })
-            .catch((error: DefaultErrorResponse) => {
-              console.log(error);
-              this.setActualAlert(new Alert(AlertTypes.ERROR, "Nieznany błąd"))
+            .catch((error: any) => {
+              this.setActualAlert(new Alert(AlertTypes.ERROR, error as string | "Nieznany błąd"))
             })
       });
     }

@@ -33,6 +33,7 @@
       <i class="bi bi-arrow-right"></i>
     </div>
   </div>
+            <Footer />
 </template>
 
 <script>
@@ -42,10 +43,11 @@ import CategoryList from '@/components/CategoryList.vue';
 import {computed, defineComponent, onMounted, ref} from 'vue';
 import {HttpHandler} from '@/data/httpHandler';
 import {useStore} from 'vuex';
+import Footer from '@/components/Footer.vue';
 
 export default defineComponent({
   name: 'MainPage',
-  components: {Header, ProductList, CategoryList},
+  components: {Header, ProductList, CategoryList, Footer},
   setup() {
     const store = useStore();
     const httpHandler = new HttpHandler();
@@ -180,5 +182,9 @@ export default defineComponent({
   transition: ease-in 500ms;
   -webkit-transform: scale(0.88);
   transform: scale(0.88);
+}
+
+#F-main-element {
+  user-select: none;
 }
 </style>

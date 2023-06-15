@@ -19,9 +19,11 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { Product } from '@/data/entities';
+import Footer from '@/components/Footer.vue';
 
 export default defineComponent({
     name: "ProductItem",
+    components: {Footer},
     data(){
         return{
             isImageLoaded: false,
@@ -55,7 +57,7 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: ghostwhite;
+    background-color: #27292b;
 }
 
 

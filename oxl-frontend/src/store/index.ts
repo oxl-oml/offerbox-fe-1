@@ -76,21 +76,13 @@ export default createStore<StoreState>({
       return state.selectedCategory;
     },
 
-    context(state): Context | null{
+    context(state): Context{
       //TODO: Moze to nie najlepsze wyjscie - do sprawdzenia
       if(localStorage.hasOwnProperty("User")){
-        try{
-          state.context.currentUser = (JSON.parse(localStorage.getItem("User") as string)) as User;
-          return state.context;
-        }catch(e){
-          return state.context;
-        }
+        state.context.currentUser = (JSON.parse(localStorage.getItem("User") as string)) as User;
       }
-      else{
-        return state.context;
-      }
+      return state.context;
     },
-
     storedProduct(state): Product | undefined{
       return state.storedProduct;
     },
@@ -162,7 +154,7 @@ export default createStore<StoreState>({
     },
 
     logout(currentState: StoreState){
-      currentState.context.currentUser = null;
+      currentState.context.currentUser = undefined;
       currentState.context.currentJWT = undefined;
       localStorage.removeItem("User");
       localStorage.removeItem("JWT");

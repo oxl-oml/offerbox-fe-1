@@ -1,5 +1,5 @@
 <template>
-   <h5>Zarządzanie użytkownikami</h5>
+<h5> <i class="bi bi-person-fill-exclamation"></i> Zarządzanie Użytkownikami</h5>
     <table class="interactive-table" v-if="users[0]">
 
         <tr>
@@ -10,7 +10,7 @@
                 {{ key }}
             </th>
         </tr>
-
+        
         <tr v-for="user in users" :key="user?.dbaseId" >
             <td>
                 <RouterLink :to="{path: 'admin/users/edit/'+user?.dbaseId}">Edit</RouterLink>
@@ -20,9 +20,8 @@
                 {{ formatValue(val) }}
             </td>
         </tr>
-
+        <button style="margin: 5px; font-size: small;" class="btn btn-primary" @click="downloadReport()">Wygeneruj raport</button>
     </table>
-   
 
 </template>
 
@@ -61,7 +60,20 @@ export default defineComponent({
                 return `${val.substring(0,19)}...`
             }
             return val;
-        }
+        },
+        downloadReport(): void {
+        const httpHandler = new HttpHandler();
+
+        httpHandler.loadReports()
+        .then((response) => {
+          console.log("Raport", response);
+          
+        })
+        .catch((err) => {
+          console.log("Error podczas pobierania raporrtu", err);
+          
+        });
+      },
     }
 });
 
@@ -69,27 +81,22 @@ export default defineComponent({
 </script>
 
 <style>
-.interactive-table{
-    overflow: scroll;
-    position: relative;
-    left: 0;
-    right: 0;
-    font-size: small;
+.interactive-table {
+  font-size: small;
 }
 
-.interactive-table th, td{
-    border-collapse: collapse;
-    border: 2px solid grey;
-    padding: 4px;
-    
+.interactive-table th,
+.interactive-table td {
+  border-collapse: collapse;
+  border: 2px solid grey;
+  padding: 4px;
 }
 
-.interactive-table td{
-    max-width: 600px
+.interactive-table td {
+  max-width: 600px;
 }
 
-.interactive-table tr:nth-child(2n){
-    background-color:gainsboro;
+.interactive-table tr:nth-child(2n) {
+  background-color: gainsboro;
 }
-
 </style>
