@@ -20,7 +20,7 @@
     </div>
     <div class="mb-3">
       <label for="inputPhone" class="form-label">Numer telefonu</label>
-      <input v-model="registerData.phone" type="tel" class="form-control" id="inputPhone" aria-describedby="phoneHelp"
+      <input v-model="registerData.phone" type="tel" class="form-control" id="inputPhone" aria-describedby="phoneHelp" pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$"
              placeholder="123456789" required/>
       <div id="phoneHelp" class="form-text">Posłuży nam do wysyłania masy SPAMu :)</div>
     </div>
@@ -67,7 +67,7 @@
 
 <script lang="ts">
 import {Alert, AlertTypes, DefaultErrorResponse, RegisterResponse} from '@/data/entities';
-import {defineComponent} from 'vue';
+import {defineComponent, onMounted} from 'vue';
 import {mapActions, mapMutations} from 'vuex';
 import {HttpHandler} from '@/data/httpHandler';
 
@@ -123,7 +123,7 @@ export default defineComponent({
                 alert = new Alert(AlertTypes.ERROR, details);
               }
               this.setActualAlert(alert);
-              
+
             })
             .catch((error: any) => {
               this.setActualAlert(new Alert(AlertTypes.ERROR, error as string | "Nieznany błąd"))
@@ -131,6 +131,9 @@ export default defineComponent({
       });
     }
   },
+  mounted(){
+    this.setActualAlert(null);
+  }
 })
 
 
