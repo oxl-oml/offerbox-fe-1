@@ -1,5 +1,8 @@
 <template>
 <h5> <i class="bi bi-person-fill-exclamation"></i> Zarządzanie Użytkownikami</h5>
+<div class="col-md-12 d-flex align-items-center justify-content-end">
+    <button style="margin: 5px; font-size: small;" class="btn btn-primary" @click="downloadReport()">Wygeneruj raport</button>
+</div>
     <table class="interactive-table" v-if="users[0]">
 
         <tr>
@@ -20,7 +23,6 @@
                 {{ formatValue(val) }}
             </td>
         </tr>
-        <button style="margin: 5px; font-size: small;" class="btn btn-primary" @click="downloadReport()">Wygeneruj raport</button>
     </table>
 
 </template>
