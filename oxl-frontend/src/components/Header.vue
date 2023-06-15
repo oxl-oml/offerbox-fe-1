@@ -12,11 +12,17 @@
 
 
         <div class="right-side-header d-flex flex-wrap align-items-center">
-            <div id="actions-bar" class="mx-4" v-if="context.currentUser">
-            <RouterLink to="/products/new" class="btn btn-primary text-white">
-                Dodaj ogłoszenie
-            </RouterLink>
+            <div id="actions-bar" class="mx-4" v-if="context.currentUser && !isAdmin">
+                <RouterLink to="/products/new" class="btn btn-primary text-white">
+                    Dodaj ogłoszenie
+                </RouterLink>
             </div>
+            <div id="actions-bar" class="mx-4" v-if="context.currentUser && isAdmin">
+                <RouterLink to="/admin" class="btn btn-primary text-white">
+                    Admin Panel
+                </RouterLink>
+            </div>
+
             <div id="notifications-bar" class="mx-4" v-if="context.currentUser">
                 <RouterLink to="/messages">
                     <img src="../assets/icons/messages.svg" class="img-icons-white mx-2 c-tooltip" />
@@ -54,6 +60,7 @@ import LoginRegister from './LoginRegister.vue';
 import { mapGetters } from 'vuex';
 import { useStore } from 'vuex';
 import { Context } from '@/data/context';
+import { isAdmin } from '@/data/scripts/helper';
 
 export default defineComponent({
     setup(){
@@ -71,6 +78,10 @@ export default defineComponent({
     computed: {
         loggeduser(): User | null {
             return this.user ? this.user : null;
+        },
+
+        isAdmin(){
+            return isAdmin();
         },
 
         ...mapGetters(["context"])
