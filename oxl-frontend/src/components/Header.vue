@@ -1,7 +1,7 @@
 <!--Nagłówek-->
 
 <template>
-    <div class="p-2 d-flex flex-row align-items-center justify-content-between ">
+    <div class="p-2 d-flex flex-row align-items-center justify-content-between">
         <div class="lef-side-header">
             <RouterLink to="/">
                 <div id="image-place">

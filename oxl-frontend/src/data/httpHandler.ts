@@ -86,10 +86,10 @@ export class HttpHandler{
     }
 
  
-    loadUserById() : Promise<User | DefaultErrorResponse>{
+    loadUserById(id: number) : Promise<User | DefaultErrorResponse>{
         const headers = headerBuilder();
-        return axios.get(urls.users, headers)
-        .then((response: {data: User[]}) => response.data)
+        return axios.get(`${urls.users}/${id}`, headers)
+        .then((response: {data: User}) => response.data)
         .catch( (error: any) => {return error.response.data as DefaultErrorResponse});
 
     }

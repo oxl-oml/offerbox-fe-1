@@ -184,6 +184,7 @@ export default createStore<StoreState>({
       let data = await task();
       context.commit("addUsers", data);
     },
+    
     async loadUserById(context, task: () => Promise<User>){
       context.commit("addUsers", await task())
     },
