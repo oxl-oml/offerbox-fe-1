@@ -7,11 +7,7 @@ import ProductPage from '../views/ProductPage.vue'
 import AdminPage from '../views/AdminPage.vue'
 import FavPage from '@/views/FavPage.vue'
 import MessPage from '@/views/MessPage.vue'
-import { Context } from '@/data/context'
 import ProfilePage from '@/views/ProfilePage.vue'
-import { useStore } from 'vuex'
-import store from '../store/index'
-import { User } from '@/data/entities'
 import { isAdmin } from '@/data/scripts/helper'
 import { isLogged } from '@/data/scripts/helper'
 
@@ -23,6 +19,7 @@ const routes: Array<RouteRecordRaw> = [
   { path: '/login-force', redirect: '/login'},
   { path: '/products/:id', component: ProductPage},
   { path: '/products:pathMatch(.*)*', redirect: "/" },
+  { path: '/:pathMatch(.*)*', redirect: "/" },
   { 
     path: '/register', 
     component: RegistrationPage,

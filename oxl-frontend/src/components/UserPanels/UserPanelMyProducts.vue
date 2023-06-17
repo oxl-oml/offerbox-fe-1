@@ -47,6 +47,7 @@
   table {
     width: 100%;
     border-collapse: collapse;
+    word-wrap:break-word;
   }
   
   th,
@@ -54,6 +55,7 @@
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    word-wrap:break-word;
   }
   
   th {

@@ -4,7 +4,7 @@
             <Header />
         </div>
     </div>
-    <div v-if="productById" class="container-md justify-content-center my-4 bg-light rounded">
+    <div v-if="productById" class="container-md justify-content-center my-4 bg-white rounded shadow ">
     <div class="product-top-bar row p-3">
         <div class="col-md-8">
             <h3>{{ productById?.name }}</h3>
@@ -23,9 +23,9 @@
             <h5>Informacje o produkcie</h5>
             <p>{{ productById?.description }}</p>
         </div>
-        <div class="product-owner col-sm-12 col-md-4 p-4">
+        <div class="product-owner col-sm-12 col-md-4 p-4 md-border-left-2 border-primary ">
             <h5>Informacje o sprzedającym</h5>
-            <p>{{ productById?.ownerId }}</p>
+            <SellerDetails v-if="productById.ownerId" :seller-id="productById.ownerId"/>
         </div>
     </div>
 </div>
@@ -35,6 +35,10 @@
 
         
     </div>
+
+
+    <Footer />
+
 </template>
 
 
@@ -49,16 +53,14 @@ import { StoreState } from '@/store';
 import { useStore } from 'vuex';
 import ImageSlider from '@/components/ImageSlider.vue';
 import Footer from '@/components/Footer.vue';
-
-
-//import { Carousel, Slide } from 'vue-carousel';
+import SellerDetails from '@/components/SellerDetails.vue';
 
 export default defineComponent({
     name: 'ProductPage',
     setup(){
         return {store: useStore()};
     },
-    components: { Header, ImageSlider, Footer },
+    components: { Header, ImageSlider, Footer, SellerDetails },
     data(){
         const store = useStore();
         const httpHandler = new HttpHandler();
@@ -100,6 +102,9 @@ export default defineComponent({
 </script>
 
 <style>
-
+.product-owner{
+    background-color: rgba(0, 0, 139, 0);
+    border-left: 2px solid;
+}
 
 </style>

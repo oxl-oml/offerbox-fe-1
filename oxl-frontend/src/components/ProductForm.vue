@@ -101,8 +101,7 @@ export default defineComponent({
                         //this.$emit("TryRegister");
                     }
                     console.log(data);
-                })
-                    .catch((error: any) => { this.setActualAlert(new Alert(AlertTypes.ERROR, error as string | "Nieznany błąd")); });
+                }).catch((error: any) => { this.setActualAlert(new Alert(AlertTypes.ERROR, error as string | "Nieznany błąd")); });
             });
         }
     },
